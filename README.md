@@ -1,2 +1,3 @@
 # startup
-CS260 Startup Application
+
+CS260 Startup Application - Collaborative Songwriter
