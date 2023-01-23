@@ -12,7 +12,7 @@ Elevator Pitch:
 A collaborative app for songwriting on the go - in solo mode, a user can enter lyrics onscreen and then enter chords above the lyric lines. In duo mode, two users can work on the same song.
 
 Key features:
-Songwriting page
-Two modes - solo and duo
-Ability to save songs to work on later
+* Songwriting page
+* Two modes - solo and duo
+* Ability to save songs to work on later
 
