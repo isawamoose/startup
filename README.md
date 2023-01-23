@@ -9,7 +9,7 @@ I was already pretty familiar with git but this reinforced the principle behind 
 
 Elevator Pitch:
 
-A collaborative app for songwriting on the go - in solo mode, a user can enter lyrics onscreen and then enter chords above the lyric lines. In duo mode, two users can work on the same song.
+A collaborative app for songwriting on the go - in solo mode, a user can enter lyrics onscreen and then enter chords above the lyric lines. In duo mode, two users can work on the same song. Users can save the song to work on later.
 
 Key features:
 * Songwriting page
