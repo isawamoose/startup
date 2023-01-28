@@ -16,3 +16,8 @@ Key features:
 * Two modes - solo and duo
 * Ability to save songs to work on later
 
+![IMG_0741](https://user-images.githubusercontent.com/60545878/215235314-5db65e77-a261-4922-b3ee-109862210231.PNG)
+
+Elevator pitch in an elevator video:
+https://user-images.githubusercontent.com/60545878/215235548-32062919-dd86-453c-aab9-33ce9103054e.MOV
+
