@@ -21,3 +21,4 @@ Key features:
 Elevator pitch in an elevator video:
 https://user-images.githubusercontent.com/60545878/215235548-32062919-dd86-453c-aab9-33ce9103054e.MOV
 
+Caddy can route traffic for multiple applications.
