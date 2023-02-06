@@ -12,9 +12,10 @@ Elevator Pitch:
 A collaborative app for songwriting on the go - in solo mode, a user can enter lyrics onscreen and then enter chords above the lyric lines. In duo mode, two users can work on the same song. Users can save the song to work on later.
 
 Key features:
-* Songwriting page
-* Two modes - solo and duo
-* Ability to save songs to work on later
+
+-   Songwriting page
+-   Two modes - solo and duo
+-   Ability to save songs to work on later
 
 ![IMG_0741](https://user-images.githubusercontent.com/60545878/215235314-5db65e77-a261-4922-b3ee-109862210231.PNG)
 
@@ -22,3 +23,9 @@ Elevator pitch in an elevator video:
 https://user-images.githubusercontent.com/60545878/215235548-32062919-dd86-453c-aab9-33ce9103054e.MOV
 
 Caddy can route traffic for multiple applications.
+
+**Simon**
+While creating the html pages, I was interested by the semantic nature of the elements. The table element stood out in that it couuld be used to
+create a layout for the buttons for the game. Some elements seemed purely semantic - you could have placed the menu items in a div, but I imagine
+placing them in a nav gives it meaning that can be recognised by search engines or other things that care about semantics.
+This also reminded me why I like component based frameworks - rather than repeating the nav html on each page, you could make a menu component that is always visible.
