@@ -24,11 +24,13 @@ https://user-images.githubusercontent.com/60545878/215235548-32062919-dd86-453c-
 
 Caddy can route traffic for multiple applications.
 
-**Simon HTML**
+## Simon
+
+**HTML**
 While creating the html pages, I was interested by the semantic nature of the elements. The table element stood out in that it could be used to
 create a layout for the buttons for the game. Some elements seemed purely semantic - you could have placed the menu items in a div, but I imagine
 placing them in a nav gives it meaning that can be recognised by search engines or other things that care about semantics.
 This also reminded me why I like component based frameworks - rather than repeating the nav html on each page, you could make a menu component that is always visible.
 
-**Simon CSS**
+**CSS**
 I appreciated how Bootstrap allowed me to focus on how I wanted the page to look, rather than worrying about how to get it to look how I want. It simplified the styling process nicely, allowing me to focus my css writing efforts on smaller issues like how I wanted the flex-direction to go.
