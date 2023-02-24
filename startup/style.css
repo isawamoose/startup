@@ -1,4 +1,37 @@
-* {
+.container {
+	height: 85vh;
+	display: grid;
+	grid-template-columns: 1fr 7fr;
+	grid-template-rows: 1fr 6fr 1fr;
+	grid-template-areas:
+		'header header'
+		'sidenav main'
+		'footer footer';
+	grid-gap: 1rem;
+}
+
+header {
+	background-color: #f4be44;
+
+	grid-area: header;
+}
+
+nav {
+	background-color: #f45844;
+	grid-area: sidenav;
+}
+
+.main {
+	background-color: #2d8397;
+	grid-area: main;
+}
+
+footer {
+	background-color: #f4be44;
+	grid-area: footer;
+}
+
+/* * {
 	font-family: sans-serif;
 	background: #222;
 	color: #aaaaaa;
@@ -119,7 +152,7 @@ footer {
 	/* from {
 		width: 3rem;
 	} */
-	50% {
+/* 50% {
 		width: 3.5rem;
 	}
-}
+} */
