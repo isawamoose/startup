@@ -1,41 +1,58 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<link rel="stylesheet" href="style.css" />
-	</head>
-	<div class="container">
-		<header>Header</header>
-		<nav>Nav</nav>
-		<div class="main">Main</div>
-		<footer>Footer</footer>
-	</div>
-</html>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>SongWriter</title>
+		<link rel="icon" href="favicon.ico" />
 
-<!-- <!DOCTYPE html>
-<html>
-	<head>
-		<link rel="stylesheet" href="style.css" />
+		<link rel="stylesheet" href="main.css" />
+
+		<!-- Include bootstrap CSS framework -->
+		<link
+			href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"
+			rel="stylesheet"
+			integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi"
+			crossorigin="anonymous" />
 	</head>
 	<body>
-		<nav>
-			<div id="saved">
-				<a>Saved</a>
-			</div>
-		</nav>
-	</body>
-	<footer>
-		<div class="mode">
-			<div id="lyrics" class="mode-option">
-				<input id="lyrics-option" name="mode" type="radio" />
-				<label for="lyrics-option">Lyrics</label>
-				<div class="check"></div>
-			</div>
-			<div id="chords" class="mode-option">
-				<input id="chords-option" name="mode" type="radio" />
-				<label for="chords-option">Chords</label>
-				<div class="check"></div>
-			</div>
+		<header class="container-fluid">
+			<nav class="navbar">
+				<a class="navbar-brand" href="">SongWriter</a>
+				<menu class="navbar-nav">
+					<li class="nav-item">
+						<a class="nav-link">Saved Songs</a>
+					</li>
+				</menu>
+			</nav>
+		</header>
+		<div class="container-fluid sidebar saved-songs">
+			Saved Songs
+			<ul class="list-group list-group-flush">
+				<li class="list-group-item">Leftover Pizza</li>
+				<li class="list-group-item">John is a great guy</li>
+				<li class="list-group-item">Home on the Strange</li>
+			</ul>
 		</div>
-		<input id="text-bar" placeholder="Enter lyrics here..." />
-	</footer>
-</html> -->
+		<main class="container-fluid main">
+			<div class="content">Lyrics and Chords</div>
+			<div id="input" class="container-fluid">
+				<input class="form-control" />
+			</div>
+		</main>
+		<div class="container-fluid sidebar online-users">
+			See who else is writing songs!
+			<ul class="list-group list-group-flush">
+				<li class="list-group-item">Adam</li>
+				<li class="list-group-item">John</li>
+				<li class="list-group-item">Drew</li>
+			</ul>
+		</div>
+		<div id="others-online"></div>
+		<footer class="text-muted">
+			<div class="container-fluid">
+				<span>Made by Stephen Amos</span>
+			</div>
+		</footer>
+	</body>
+</html>
