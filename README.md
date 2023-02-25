@@ -34,3 +34,10 @@ This also reminded me why I like component based frameworks - rather than repeat
 
 **CSS**
 I appreciated how Bootstrap allowed me to focus on how I wanted the page to look, rather than worrying about how to get it to look how I want. It simplified the styling process nicely, allowing me to focus my css writing efforts on smaller issues like how I wanted the flex-direction to go.
+
+## Startup
+
+**HTML and CSS**
+I found while creating the HTML and CSS for my startup that it was helpful to sketch out the layout I wanted to create before I created it. I also found that for creating a more complicated layout, learning to use grid properly was very helpful as it allowed me to specify exactly where/how I wanted to place various elements.
+I tried using a colour palette mixer for a colour scheme but found it difficult to get the colours to look good so I made the entire colour scheme dark.
+Bootstrap was helpful for styling a few elements but I may revert to regular css for more control over the appearance.
