@@ -35,6 +35,13 @@ This also reminded me why I like component based frameworks - rather than repeat
 **CSS**
 I appreciated how Bootstrap allowed me to focus on how I wanted the page to look, rather than worrying about how to get it to look how I want. It simplified the styling process nicely, allowing me to focus my css writing efforts on smaller issues like how I wanted the flex-direction to go.
 
+**JavaScript**
+JavaScript was really where I felt interested in this project. CSS helped me fill in some knowledge gaps but Javascript is exciting - it's what makes the game work.
+I liked the use of local storage to store the username and game scores (i.e. in login.js and scores.js). This code was simple, making it easier to understand.
+The code in play.js was more difficult to follow. Here I saw the use of classes to define both buttons and games with their respective functions. The button class was useful as the game class could then declare buttons and call functionality on them.
+I appreciated how the game code tied objects to html elements, as in the case of the buttons. Each game button html had a js button object associated with it. 
+I also appreciated the use of Promises and await() so that the code would wait for the sound to finish playing before resuming. Nice touch.
+
 ## Startup
 
 **HTML and CSS**
