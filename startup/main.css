@@ -69,6 +69,7 @@ li {
 
 .content {
 	background: #323232;
+	height: 34rem;
 	flex: 1;
 	display: grid;
 	grid-template-columns: 1fr 3fr 1fr;
@@ -82,11 +83,12 @@ li {
 	background-color: #3b3b3b;
 	grid-area: song;
 	border-radius: 0.5rem;
+	overflow: scroll;
 }
 
 div.line {
 	margin: 0.5rem 0.5rem 0 0.5rem;
-
+	border-radius: 0.2rem;
 	padding: 0.5rem;
 }
 

@@ -2,11 +2,8 @@ let inputEl;
 const maxLines = 10;
 let numLines = 0;
 
-document.addEventListener('DOMContentLoaded', function () {
-	// Code here waits to run until the DOM is loaded.
-	inputEl = document.querySelector('#lineInput');
-	inputEl.addEventListener('keydown', handleKeydown);
-});
+inputEl = document.querySelector('#lineInput');
+inputEl.addEventListener('keydown', handleKeydown);
 
 function handleKeydown(event) {
 	if (event.key == 'Enter') {
@@ -25,3 +22,17 @@ function insertLineOfLyrics(text) {
 		numLines++;
 	}
 }
+
+// Each name should be a link that opens up some interactive window
+const usersOnline = ['Adam', 'John', 'Drew'];
+
+function displayUsersOnline() {
+	const nameList = document.querySelector('#nameList');
+	for (const name of usersOnline) {
+		const nameEl = document.createElement('li');
+		// tbc...
+	}
+}
+
+// Each song will have two arrays (lyrics and chords) and the full songs will be stored, not just the titles.
+const songs = ['Leftover Pizza', 'John is a great guy', 'Home on the Strange'];
