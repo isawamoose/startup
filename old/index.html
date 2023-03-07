@@ -19,23 +19,14 @@
 			<a href="#" class="text-light">SongWriter</a>
 		</header>
 		<main>
-			<input type="checkbox" id="menu" />
-			<label for="menu" class="menu">
-				<span></span>
-				<span></span>
-				<span></span>
-			</label>
-
-			<nav class="nav bg-secondary">
-				<ul class="bg-secondary">
-					<li class="text-light">
-						<a href="#">Saved Songs</a>
-					</li>
-					<li class="text-light">
-						<a href="#">Online Users</a>
-					</li>
+			<div class="sidebar saved-songs text-light bg-secondary">
+				Saved Songs
+				<ul class="list-group list-group-flush">
+					<li class="list-group-item">Leftover Pizza</li>
+					<li class="list-group-item">John is a great guy</li>
+					<li class="list-group-item">Home on the Strange</li>
 				</ul>
-			</nav>
+			</div>
 			<div class="content">
 				<div id="song" class="song text-light bg-secondary"></div>
 				<div id="inputArea">
@@ -46,6 +37,15 @@
 						placeholder="Enter a line of lyrics..." />
 				</div>
 			</div>
+			<div class="sidebar online-users text-light bg-secondary">
+				See who else is writing songs!
+				<ul class="list-group list-group-flush">
+					<li class="list-group-item">Adam</li>
+					<li class="list-group-item">John</li>
+					<li class="list-group-item">Drew</li>
+				</ul>
+			</div>
+			<div id="others-online"></div>
 		</main>
 		<footer class="text-muted">
 			<div class="container-fluid">

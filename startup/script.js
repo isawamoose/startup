@@ -1,8 +1,4 @@
-let inputEl;
-const maxLines = 10;
-let numLines = 0;
-
-inputEl = document.querySelector('#lineInput');
+const inputEl = document.querySelector('#lineInput');
 inputEl.addEventListener('keydown', handleKeydown);
 
 function handleKeydown(event) {
@@ -12,10 +8,12 @@ function handleKeydown(event) {
 }
 
 function insertLineOfLyrics(text) {
-	if (text && numLines <= maxLines) {
+	if (text) {
 		const newLine = document.createElement('div');
 		newLine.textContent = text;
 		newLine.classList.add('line');
+		newLine.style.textAlign = 'center';
+		inputEl.value = '';
 
 		const songDisplay = document.getElementById('song');
 		songDisplay.appendChild(newLine);
