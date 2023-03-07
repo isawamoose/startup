@@ -3,7 +3,8 @@
 }
 
 body {
-	height: 100vh;
+	height: 100%;
+	min-height: 20rem;
 	display: flex;
 	flex-direction: column;
 }
@@ -14,40 +15,53 @@ header {
 }
 
 footer {
+	position: fixed;
 	background-color: #f4be44;
+	bottom: 0;
 	flex: 0 2rem;
 }
 
-main {
+/* main {
 	flex: 1 calc(100vh - 4rem);
 	display: grid;
 	grid-template-columns: 1fr 6fr 1fr;
 	grid-template-areas: 'saved-songs song online-users';
+} */
+
+main {
+	flex: 1 calc(100vh - 4rem);
+	display: flex;
+	flex-direction: row;
 }
 
 .sidebar {
+	flex: 0 10rem;
 	background-color: #3b3b3b;
+}
+
+ul {
+	margin-top: 0.5rem !important;
 }
 
 li {
 	text-align: center;
 }
 
-.sidebar:hover {
-	border-bottom: 0.5rem solid #006d8d;
-}
-
-.saved-songs {
+/* .saved-songs {
 	grid-area: saved-songs;
+} */
+
+.online-users {
+	float: right;
 }
 
 .saved-songs li:hover {
 	border-right: 0.5rem solid #006d8d !important;
 }
 
-.online-users {
+/* .online-users {
 	grid-area: online-users;
-}
+} */
 
 .online-users li:hover {
 	border-left: 0.5rem solid #006d8d !important;
@@ -55,9 +69,9 @@ li {
 
 .content {
 	background: #323232;
-	grid-area: song;
+	flex: 1;
 	display: grid;
-	grid-template-columns: 2fr 5fr 2fr;
+	grid-template-columns: 1fr 3fr 1fr;
 	grid-template-rows: 9fr 1fr;
 	grid-template-areas:
 		'. song .'
@@ -67,19 +81,35 @@ li {
 .song {
 	background-color: #3b3b3b;
 	grid-area: song;
+	border-radius: 0.5rem;
 }
 
-#input {
+div.line {
+	margin: 0.5rem 0.5rem 0 0.5rem;
+
 	padding: 0.5rem;
+}
+
+/* div.line:not(:first-child) {
+} */
+
+#inputArea {
+	padding: 0.5rem 0 !important;
 	/* background-color: #f4be44; */
 	grid-area: input;
+	display: flex;
+	flex-direction: row;
 }
 
-#input:focus {
+#inputArea:focus {
 	border: 0.3rem solid #006d8d;
 	color: #fff;
 	margin: -0.25rem;
 	outline: none;
+}
+
+#add-line {
+	margin-left: 0.5rem;
 }
 
 .navbar-brand {
@@ -95,4 +125,18 @@ menu .nav-item {
 	position: fixed;
 	right: 1rem;
 	bottom: 8rem;
+}
+
+@media (max-width: 50rem) {
+	.sidebar {
+		display: none;
+	}
+
+	.content {
+		grid-template-columns: 1fr 5fr 1fr;
+		grid-template-rows: 9fr 1fr;
+		grid-template-areas:
+			'. song .'
+			'. input .';
+	}
 }

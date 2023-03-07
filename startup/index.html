@@ -13,13 +13,15 @@
 			rel="stylesheet"
 			integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi"
 			crossorigin="anonymous" />
+
+		<script src="script.js"></script>
 	</head>
 	<body>
 		<header class="text-muted">
-			<a class="navbar-brand" href="#">SongWriter</a>
+			<a href="#" class="text-light">SongWriter</a>
 		</header>
 		<main>
-			<div class="container-fluid sidebar saved-songs text-light">
+			<div class="sidebar saved-songs text-light bg-secondary">
 				Saved Songs
 				<ul class="list-group list-group-flush">
 					<li class="list-group-item">Leftover Pizza</li>
@@ -28,14 +30,16 @@
 				</ul>
 			</div>
 			<div class="content">
-				<div class="song text-light">Lyrics and Chords</div>
-				<div id="input">
+				<div id="song" class="song text-light bg-secondary"></div>
+				<div id="inputArea">
 					<input
+						id="lineInput"
+						name="line"
 						class="form-control"
 						placeholder="Enter a line of lyrics..." />
 				</div>
 			</div>
-			<div class="container-fluid sidebar online-users text-light">
+			<div class="sidebar online-users text-light bg-secondary">
 				See who else is writing songs!
 				<ul class="list-group list-group-flush">
 					<li class="list-group-item">Adam</li>
