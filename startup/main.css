@@ -21,14 +21,15 @@ footer {
 main {
 	flex: 1 calc(100vh - 4rem);
 	display: flex;
+	max-height: 90vh;
 	flex-direction: row;
-	min-height: 35rem;
+	/* min-height: 35rem; */
 	background: #323232;
 }
 
 .content {
 	background: #323232;
-	height: 38rem;
+	height: 100%;
 	flex: 1;
 	display: grid;
 	grid-template-columns: 1fr 2fr 1fr;
@@ -49,6 +50,7 @@ div.line {
 	margin: 0.5rem 0.5rem 0 0.5rem;
 	border-radius: 0.2rem;
 	padding: 0.5rem;
+	background-color: #323232;
 }
 
 #inputArea {
@@ -146,8 +148,8 @@ div.line {
 .nav {
 	position: fixed;
 	top: 0;
-	left: -15rem;
-	width: 15rem;
+	left: -18rem;
+	width: 18rem;
 	height: 100vh;
 	margin: 0;
 	padding: 0;
@@ -163,7 +165,7 @@ div.line {
 }
 
 .nav li {
-	width: 15rem;
+	width: 18rem;
 	padding: 1rem;
 	border-bottom: 0.5rem solid white;
 }

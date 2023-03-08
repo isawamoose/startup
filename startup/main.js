@@ -7,6 +7,13 @@ function handleKeydown(event) {
 	}
 }
 
+class Song {
+	title;
+	lyrics = [];
+}
+
+const song = new Song();
+
 function insertLineOfLyrics(text) {
 	if (text) {
 		const newLine = document.createElement('div');
@@ -17,20 +24,14 @@ function insertLineOfLyrics(text) {
 
 		const songDisplay = document.getElementById('song');
 		songDisplay.appendChild(newLine);
-		numLines++;
+
+		song.lyrics.push(text);
 	}
 }
 
-// Each name should be a link that opens up some interactive window
-const usersOnline = ['Adam', 'John', 'Drew'];
+const songs = JSON.parse(localStorage.getItem('songs'));
 
-function displayUsersOnline() {
-	const nameList = document.querySelector('#nameList');
-	for (const name of usersOnline) {
-		const nameEl = document.createElement('li');
-		// tbc...
-	}
+function saveSong(song) {
+	songs.add(song);
+	localStorage.setItem('songs', JSON.stringify(songs));
 }
-
-// Each song will have two arrays (lyrics and chords) and the full songs will be stored, not just the titles.
-const songs = ['Leftover Pizza', 'John is a great guy', 'Home on the Strange'];
