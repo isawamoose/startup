@@ -1,9 +1,14 @@
-// Each name should be a link that opens up some interactive window
+// Online users will come from web sockets
 const usersOnline = ['Adam', 'John', 'Drew'];
+const usersListEl = document.querySelector('#displayList');
+count = 0;
 
-for (const user of usersOnline) {
-	const userCard = document.createElement('div');
-	// card style
-	// display songs?
-	// click on card to open chat window?
-}
+usersOnline.forEach((user) => {
+	const onlineUser = document.createElement('li');
+	onlineUser.classList.add('online-user');
+	onlineUser.innerText = user;
+	onlineUser.id = 'user' + count;
+
+	count++;
+	usersListEl.appendChild(onlineUser);
+});

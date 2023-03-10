@@ -16,7 +16,27 @@
 	</head>
 	<body>
 		<header class="text-muted">
-			<a href="#" class="text-light">SongWriter</a>
+			<input id="title" class="form-control" value="Untitled" /><button
+				class="btn btn-secondary"
+				id="saveBtn"
+				onclick="saveSong()">
+				Save
+			</button>
+			<button class="btn btn-secondary" id="newBtn" onclick="newSong()">
+				New
+			</button>
+			<div id="login">
+				<input
+					id="login-name"
+					class="form-control"
+					placeholder="Enter Username" />
+				<button
+					class="btn btn-secondary"
+					id="loginBtn"
+					onclick="loginUser()">
+					Login
+				</button>
+			</div>
 		</header>
 		<main>
 			<input type="checkbox" id="menu" />
@@ -36,7 +56,7 @@
 					</li>
 				</ul>
 			</nav>
-			<div class="content">
+			<div class="writer">
 				<div id="song" class="song text-light bg-secondary"></div>
 				<div id="inputArea">
 					<input
@@ -50,6 +70,9 @@
 		<footer class="text-muted">
 			<div class="container-fluid">
 				<span>Made by Stephen Amos</span>
+				<a href="https://github.com/isawamoose/startup"
+					><img id="github-logo" src="github-mark-white.png"
+				/></a>
 			</div>
 		</footer>
 		<script src="main.js"></script>
