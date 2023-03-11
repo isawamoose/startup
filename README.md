@@ -31,6 +31,9 @@ Caddy can route traffic for multiple applications.
 SOP: Same origin policy
 CORS: Cross-origin resource sharing - the service you are calling needs to return an Access-Control-Allow-Origin header so the browser will know that the request is allowed.
 
+**Fetch**
+A lot of APIs require an api key, which you can put in the options section of the fetch request, inside a headers object.
+
 ## Simon
 
 **HTML**
