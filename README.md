@@ -48,3 +48,10 @@ I also appreciated the use of Promises and await() so that the code would wait f
 I found while creating the HTML and CSS for my startup that it was helpful to sketch out the layout I wanted to create before I created it. I also found that for creating a more complicated layout, learning to use grid properly was very helpful as it allowed me to specify exactly where/how I wanted to place various elements.
 I tried using a colour palette mixer for a colour scheme but found it difficult to get the colours to look good so I made the entire colour scheme dark.
 Bootstrap was helpful for styling a few elements but I may revert to regular css for more control over the appearance.
+
+**JavaScript**
+I used the document.createElement() and el.appendChild() functions for pretty much every piece of functionality - updating the DOM according to user input is needed for my app to work.
+I learned that whatever you store in localStorage needs to be stringifiable - e.g. strings, objects and arrays are fine, but Maps are not.
+Local and session storage became my go to way of maintaining state across the application. Very useful.
+I found it helpful, when storing objects that were associated with DOM elements in another object, to give the DOM element an id that matched the key of the object being stored.
+Writing functions was necessary to have any kind of click functionality - I could set the onclick property of a DOM element to be a function.
