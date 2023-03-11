@@ -20,9 +20,15 @@ A collaborative app for songwriting on the go - in solo mode, a user can enter l
 Elevator pitch in an elevator video:
 https://user-images.githubusercontent.com/60545878/215235548-32062919-dd86-453c-aab9-33ce9103054e.MOV
 
-## Caddy
+## Class Notes
+
+**Caddy**
 
 Caddy can route traffic for multiple applications.
+
+**SOP and CORS**
+SOP: Same origin policy
+CORS: Cross-origin resource sharing - the service you are calling needs to return an Access-Control-Allow-Origin header so the browser will know that the request is allowed.
 
 ## Simon
 
