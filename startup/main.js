@@ -2,7 +2,7 @@ const inputEl = document.querySelector('#lineInput');
 const titleEl = document.querySelector('#title');
 const saveButton = document.querySelector('#saveBtn');
 const songDisplay = document.getElementById('song');
-const songs = JSON.parse(localStorage.getItem('songs')) ?? [];
+let songs = JSON.parse(localStorage.getItem('songs')) ?? {};
 const loginButton = document.querySelector('#loginBtn');
 const loginName = document.querySelector('#login-name');
 const login = document.querySelector('#login');
@@ -16,6 +16,7 @@ function handleKeydown(event) {
 }
 
 class Song {
+	id;
 	title;
 	lyrics = [];
 	numLines = 0;
@@ -48,15 +49,23 @@ function addLineToDOM(text) {
 function saveToStorage() {
 	song.title = titleEl.value;
 
-	let alreadyExists = false;
-	for (let i = 0; i < songs.length; ++i) {
-		if (songs[i] && songs[i].title === song.title) {
-			songs[i] = song;
-			alreadyExists = true;
+	let nextId = Object.keys(songs)[Object.keys(songs).length - 1] ?? 0;
+	console.log(Object.keys(songs));
+	nextId++;
+	console.log(nextId);
+	song.id = nextId;
+
+	for (const key in songs) {
+		const s = songs[key];
+		if (s.title === song.title) {
+			song.id = s.id;
 		}
 	}
-	if (!alreadyExists) songs.push(song);
+
+	songs[song.id] = song;
+
 	localStorage.setItem('songs', JSON.stringify(songs));
+	songs = JSON.parse(localStorage.getItem('songs'));
 	sessionStorage.setItem('songToDisplay', song);
 	saveButton.innerText = 'Saved';
 	saveButton.classList.replace('btn-secondary', 'btn-dark');
@@ -87,19 +96,18 @@ function newSong() {
 }
 
 function displaySong() {
-	// const songToDisplay =
-	// 	JSON.parse(sessionStorage.getItem('songToDisplay')) ?? null;
-	// if (songToDisplay) {
-	// 	song = songToDisplay;
-	// 	titleEl.value = song.title;
-	// 	for (const line of song.lyrics) {
-	// 		addLineToDOM(line);
-	// 	}
-	// }
+	const songToDisplay =
+		JSON.parse(sessionStorage.getItem('songToDisplay')) ?? null;
+	if (songToDisplay) {
+		song = songToDisplay;
+		titleEl.value = song.title;
+		for (const line of song.lyrics) {
+			addLineToDOM(line);
+		}
+	}
 }
 
 function loginUser(name) {
-	console.log(2);
 	let username;
 
 	if (name) {

@@ -1,6 +1,9 @@
 // Online users will come from web sockets
 const usersOnline = ['Adam', 'John', 'Drew'];
 const usersListEl = document.querySelector('#displayList');
+const loginButton = document.querySelector('#loginBtn');
+const loginName = document.querySelector('#login-name');
+const login = document.querySelector('#login');
 count = 0;
 
 usersOnline.forEach((user) => {
@@ -12,3 +15,50 @@ usersOnline.forEach((user) => {
 	count++;
 	usersListEl.appendChild(onlineUser);
 });
+
+function loginUser(name) {
+	let username;
+
+	if (name) {
+		username = name;
+	} else if (loginName.value) {
+		username = loginName.value;
+	}
+	if (username) {
+		sessionStorage.setItem('username', username);
+		loginName.remove();
+		loginButton.remove();
+
+		const nameDisplay = document.createElement('div');
+		nameDisplay.innerText = username;
+		nameDisplay.classList.add('text-light');
+		nameDisplay.id = 'nameDisplay';
+		login.appendChild(nameDisplay);
+
+		loginButton.innerText = 'Logout';
+		loginButton.onclick = logoutUser;
+		login.appendChild(loginButton);
+	}
+}
+
+function displayUserAlreadyLoggedIn() {
+	const username = sessionStorage.getItem('username');
+	if (username) {
+		loginUser(username);
+	}
+}
+
+function logoutUser() {
+	sessionStorage.removeItem('username');
+	const nameDisplay = document.querySelector('#nameDisplay');
+	nameDisplay.remove();
+	loginButton.remove();
+
+	loginName.value = '';
+	login.appendChild(loginName);
+	loginButton.innerText = 'Login';
+	loginButton.onclick = loginUser;
+	login.appendChild(loginButton);
+}
+
+displayUserAlreadyLoggedIn();

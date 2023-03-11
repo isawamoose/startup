@@ -269,14 +269,27 @@ li a {
 	justify-content: center;
 }
 
-.delete {
-	display: none !important;
-	background-color: #6c757d;
+.saved-item {
+	margin-left: 4rem;
+}
+
+.space-holder {
+	display: inline !important;
+	background: #323232;
+}
+
+.delete,
+.space-holder {
 	border: none;
 	width: 3rem;
 	height: 3rem;
 	margin-left: 1rem;
 	border-radius: 100% !important;
+}
+
+.delete {
+	background-color: #6c757d;
+	display: none !important;
 }
 
 .delete:hover {
@@ -286,4 +299,8 @@ li a {
 
 .saved-item:hover .delete {
 	display: inline !important;
+}
+
+.saved-item:hover .space-holder {
+	display: none !important;
 }
