@@ -14,6 +14,11 @@ header {
 	flex-direction: row;
 }
 
+header a {
+	position: relative;
+	left: 2.5rem;
+}
+
 footer {
 	background: #323232;
 	flex: 0 2rem;
@@ -34,11 +39,15 @@ main {
 /* Song title / save button */
 
 #title {
+	position: relative;
+	left: 3rem;
 	border-radius: 0.2rem;
 	width: 12rem;
 }
 
 #title ~ button {
+	position: relative;
+	left: 3rem;
 	margin-left: 0.5rem;
 }
 
@@ -107,23 +116,24 @@ div.line {
 
 .menu {
 	position: fixed;
-	top: 3.5rem;
-	left: 0.5rem;
+	top: 0.15rem;
+	left: 0.25rem;
 	display: flex;
 	align-items: center;
 	justify-content: center;
 	flex-direction: column;
 	width: 3rem;
 	height: 3rem;
-	background-color: white;
-	border-radius: 50%;
+	/* background-color: white; */
+	/* border-radius: 50%; */
 	transition: transform 250ms ease;
 	cursor: pointer;
 	z-index: 200;
 }
 
 .menu span {
-	background-color: #444;
+	/* background-color: #444; */
+	background-color: white;
 	position: relative;
 	display: block;
 	width: 50%;
@@ -169,7 +179,7 @@ div.line {
 
 #menu:checked ~ nav {
 	left: 0;
-	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+	box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2);
 	transition: left 0.3s ease;
 }
 
@@ -187,7 +197,7 @@ div.line {
 
 .nav ul {
 	position: relative;
-	top: 8rem;
+	top: 5rem;
 	padding: 0;
 	list-style: none;
 }
@@ -245,11 +255,11 @@ li a {
 	border-radius: 0.5rem;
 }
 
-.saved-song:hover,
-.online-user:hover {
+.saved-song:hover {
 	background-color: white !important;
 	transition: 0.2s ease;
 	color: #444 !important;
+	cursor: pointer;
 }
 
 #displayList {
@@ -257,11 +267,11 @@ li a {
 	list-style: none;
 }
 
-#displayList li:hover {
+/* #displayList li:hover {
 	color: #444;
 	transition: 0.2s ease;
 	cursor: pointer;
-}
+} */
 
 .saved-item,
 .online-user {
@@ -305,4 +315,10 @@ li a {
 
 .saved-item:hover .space-holder {
 	display: none !important;
+}
+
+@media (width < 39rem) {
+	#login {
+		display: none;
+	}
 }
