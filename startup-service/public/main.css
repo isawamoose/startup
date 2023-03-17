@@ -107,8 +107,8 @@ div.line {
 
 .menu {
 	position: fixed;
-	top: 4rem;
-	left: 1.5rem;
+	top: 3.5rem;
+	left: 0.5rem;
 	display: flex;
 	align-items: center;
 	justify-content: center;
@@ -169,6 +169,7 @@ div.line {
 
 #menu:checked ~ nav {
 	left: 0;
+	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
 	transition: left 0.3s ease;
 }
 
