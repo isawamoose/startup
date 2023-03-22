@@ -1,20 +1,27 @@
-// Online users will come from web sockets
-const usersOnline = ['Adam', 'John', 'Drew'];
 const usersListEl = document.querySelector('#displayList');
 const loginButton = document.querySelector('#loginBtn');
 const loginName = document.querySelector('#login-name');
 const login = document.querySelector('#login');
 count = 0;
 
-usersOnline.forEach((user) => {
-	const onlineUser = document.createElement('li');
-	onlineUser.classList.add('online-user');
-	onlineUser.innerText = user;
-	onlineUser.id = 'user' + count;
+let usersOnline = [];
 
-	count++;
-	usersListEl.appendChild(onlineUser);
-});
+async function getUsers() {
+	console.log('Getting users');
+	await fetch('/api/loadUsers')
+		.then((resp) => resp.json())
+		.then((data) => (usersOnline = data))
+		.catch((err) => console.log(err));
+	usersOnline.forEach((user) => {
+		const onlineUser = document.createElement('li');
+		onlineUser.classList.add('online-user');
+		onlineUser.innerText = user;
+		onlineUser.id = 'user' + count;
+
+		count++;
+		usersListEl.appendChild(onlineUser);
+	});
+}
 
 function loginUser(name) {
 	let username;
@@ -62,3 +69,4 @@ function logoutUser() {
 }
 
 displayUserAlreadyLoggedIn();
+getUsers();

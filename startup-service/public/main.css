@@ -317,7 +317,7 @@ li a {
 	display: none !important;
 }
 
-@media (width < 39rem) {
+@media (width < 40rem) {
 	#login {
 		display: none;
 	}

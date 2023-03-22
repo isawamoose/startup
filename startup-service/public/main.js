@@ -2,18 +2,11 @@ const inputEl = document.querySelector('#lineInput');
 const titleEl = document.querySelector('#title');
 const saveButton = document.querySelector('#saveBtn');
 const songDisplay = document.getElementById('song');
-let songs = JSON.parse(localStorage.getItem('songs')) ?? {};
 const loginButton = document.querySelector('#loginBtn');
 const loginName = document.querySelector('#login-name');
 const login = document.querySelector('#login');
 
 inputEl.addEventListener('keydown', handleKeydown);
-
-function handleKeydown(event) {
-	if (event.key == 'Enter') {
-		insertLineOfLyrics(inputEl.value);
-	}
-}
 
 class Song {
 	id;
@@ -23,6 +16,13 @@ class Song {
 }
 
 let song = new Song();
+let songs = {};
+
+function handleKeydown(event) {
+	if (event.key == 'Enter') {
+		insertLineOfLyrics(inputEl.value);
+	}
+}
 
 function insertLineOfLyrics(text) {
 	if (text) {
@@ -46,39 +46,46 @@ function addLineToDOM(text) {
 	songDisplay.appendChild(newLine);
 }
 
-function saveToStorage() {
+async function saveToStorage() {
 	song.title = titleEl.value;
 
-	let nextId = Object.keys(songs)[Object.keys(songs).length - 1] ?? 0;
-	console.log(Object.keys(songs));
-	nextId++;
-	console.log(nextId);
-	song.id = nextId;
+	// Get next id
+	const songKeys = Object.keys(songs);
+	song.id = songKeys[songKeys.length - 1]
+		? songKeys[songKeys.length - 1] + 1
+		: '0';
 
-	for (const key in songs) {
-		const s = songs[key];
+	for (const s of Object.values(songs)) {
 		if (s.title === song.title) {
 			song.id = s.id;
 		}
 	}
 
 	songs[song.id] = song;
+	try {
+		const resp = await fetch('/api/putSongs', {
+			method: 'POST',
+			headers: { 'content-type': 'application/json' },
+			body: JSON.stringify(songs),
+		});
+		const data = await resp.json();
+		songs = data;
+	} catch (err) {
+		console.log(err);
+	}
 
-	localStorage.setItem('songs', JSON.stringify(songs));
-	songs = JSON.parse(localStorage.getItem('songs'));
 	sessionStorage.setItem('songToDisplay', song);
-	saveButton.innerText = 'Saved';
-	saveButton.classList.replace('btn-secondary', 'btn-dark');
 }
 
 function saveSong() {
 	setTimeout(() => {
 		saveToStorage();
+		saveButton.innerText = 'Saved';
+		saveButton.classList.replace('btn-secondary', 'btn-dark');
 	}, 500);
 	saveButton.innerText = 'Saving';
 }
 
-// if not saved, prompt for save?
 function newSong() {
 	saveToStorage();
 	song = new Song();
@@ -152,5 +159,15 @@ function logoutUser() {
 	login.appendChild(loginButton);
 }
 
+async function getSongs() {
+	console.log('Getting songs');
+	await fetch('/api/loadSongs')
+		.then((resp) => resp.json())
+		.then((data) => (songs = data))
+		.catch((err) => console.log(err));
+	console.log('Songs: ', songs);
+}
+
+getSongs();
 displaySong();
 displayUserAlreadyLoggedIn();

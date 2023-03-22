@@ -1,9 +1,18 @@
-const songs = JSON.parse(localStorage.getItem('songs')) ?? [];
+let songs = {};
 const itemEls = {};
 const savedSongListEl = document.querySelector('#displayList');
 const loginButton = document.querySelector('#loginBtn');
 const loginName = document.querySelector('#login-name');
 const login = document.querySelector('#login');
+
+async function getSongs() {
+	console.log('Getting songs');
+	await fetch('/api/loadSongs')
+		.then((resp) => resp.json())
+		.then((data) => (songs = data))
+		.catch((err) => console.log(err));
+	displaySongs();
+}
 
 function displaySongs() {
 	for (const song of Object.values(songs)) {
@@ -41,13 +50,18 @@ function openSong(event) {
 	window.location.href = 'index.html';
 }
 
-function deleteSong(event) {
+async function deleteSong(event) {
 	// Array indexing adjusts when you remove an element
-	console.log('click');
 	const id = event.target.id.replace(/^\D+/g, '');
 	delete songs[id];
-	console.log(songs);
-	localStorage.setItem('songs', JSON.stringify(songs));
+
+	await fetch('/api/putSongs', {
+		method: 'POST',
+		headers: { 'content-type': 'application/json' },
+		body: JSON.stringify(songs),
+	}).catch((err) => console.log(err));
+
+	// localStorage.setItem('songs', JSON.stringify(songs));
 
 	itemEls[id].remove();
 }
@@ -97,5 +111,5 @@ function logoutUser() {
 	login.appendChild(loginButton);
 }
 
-displaySongs();
+getSongs();
 displayUserAlreadyLoggedIn();
