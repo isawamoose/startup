@@ -52,6 +52,12 @@ The code in play.js was more difficult to follow. Here I saw the use of classes 
 I appreciated how the game code tied objects to html elements, as in the case of the buttons. Each game button html had a js button object associated with it. 
 I also appreciated the use of Promises and await() so that the code would wait for the sound to finish playing before resuming. Nice touch.
 
+**Service**
+I appreciated how easy express makes creating a back end service. All http endpoints can be created by calling `app.<verb>` where the verb is the http action being performed e.g. get, post, put.
+Parsing json requests as objects in the service can be done using built-in middleware, by using the code `app.use(express.json());`
+The app's static files can be served using the code `app.use(express.static('public'));`
+I learned that when receiving a response from the service, I needed to not only `await` the response, but then `await` the `response.json()` before using the response.
+
 ## Startup
 
 **HTML and CSS**
