@@ -58,6 +58,11 @@ Parsing json requests as objects in the service can be done using built-in middl
 The app's static files can be served using the code `app.use(express.static('public'));`
 I learned that when receiving a response from the service, I needed to not only `await` the response, but then `await` the `response.json()` before using the response.
 
+**DB**
+To properly store database credentials, put them in environment variables so they don't get checked into any repos.
+Databases have collections into which data can be inserted using `collection.insertOne(pieceOfData)`.
+Ideally, no front end code needs to be changed - the back end service handles all calls to the database and then returns data / messages to the front end as normal. So currently, my startup front end code calls the back end service to put and get songs. I can add db functionality to the back end service so that it inserts / looks up the data into / from the mongodb database.
+
 ## Startup
 
 **HTML and CSS**
