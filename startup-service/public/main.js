@@ -11,8 +11,7 @@ inputEl.addEventListener('keydown', handleKeydown);
 class Song {
 	id;
 	title;
-	lyrics = [];
-	numLines = 0;
+	lyrics = {};
 }
 
 let song = new Song();
@@ -26,24 +25,46 @@ function handleKeydown(event) {
 
 function insertLineOfLyrics(text) {
 	if (text) {
-		addLineToDOM(text);
-		song.numLines++;
-		song.lyrics.push(text);
+		// Get next id
+		const lyricsKeys = Object.keys(song.lyrics);
+		const id = lyricsKeys[lyricsKeys.length - 1]
+			? Number(lyricsKeys[lyricsKeys.length - 1]) + 1
+			: 0;
+		song.lyrics[id] = text;
+
+		addLineToDOM(text, id);
+
 		if (saveButton.innerText !== 'Save') {
 			saveButton.innerText = 'Save';
 			saveButton.classList.replace('btn-dark', 'btn-secondary');
 		}
+
+		sessionStorage.setItem('songToDisplay', song);
 	}
 }
 
-function addLineToDOM(text) {
+function addLineToDOM(text, id) {
+	console.log('id: ', id);
 	const newLine = document.createElement('div');
 	newLine.textContent = text;
 	newLine.classList.add('line');
+	newLine.id = id;
 	newLine.style.textAlign = 'center';
-	inputEl.value = '';
+	newLine.addEventListener('click', removeLyricLine);
 
 	songDisplay.appendChild(newLine);
+	inputEl.value = '';
+}
+
+function removeLyricLine(event) {
+	const id = event.target.id;
+	delete song.lyrics[id];
+	event.target.remove();
+
+	if (saveButton.innerText !== 'Save') {
+		saveButton.innerText = 'Save';
+		saveButton.classList.replace('btn-dark', 'btn-secondary');
+	}
 }
 
 async function saveToStorage() {
@@ -52,8 +73,8 @@ async function saveToStorage() {
 	// Get next id
 	const songKeys = Object.keys(songs);
 	song.id = songKeys[songKeys.length - 1]
-		? songKeys[songKeys.length - 1] + 1
-		: '0';
+		? Number(songKeys[songKeys.length - 1]) + 1
+		: 0;
 
 	for (const s of Object.values(songs)) {
 		if (s.title === song.title) {
@@ -87,7 +108,9 @@ function saveSong() {
 }
 
 function newSong() {
-	saveToStorage();
+	if (song.lyrics.length) {
+		saveToStorage();
+	}
 	song = new Song();
 	titleEl.value = 'Untitled';
 	saveButton.innerText = 'Save';
@@ -96,7 +119,6 @@ function newSong() {
 	// reset
 	while (songDisplay.children.length) {
 		for (const child of songDisplay.children) {
-			console.log(child);
 			child.remove();
 		}
 	}
@@ -108,8 +130,8 @@ function displaySong() {
 	if (songToDisplay) {
 		song = songToDisplay;
 		titleEl.value = song.title;
-		for (const line of song.lyrics) {
-			addLineToDOM(line);
+		for (const line of Object.entries(song.lyrics)) {
+			addLineToDOM(line[1], line[0]);
 		}
 	}
 }
@@ -160,12 +182,14 @@ function logoutUser() {
 }
 
 async function getSongs() {
-	console.log('Getting songs');
 	await fetch('/api/loadSongs')
 		.then((resp) => resp.json())
 		.then((data) => (songs = data))
 		.catch((err) => console.log(err));
-	console.log('Songs: ', songs);
+}
+
+function openSignInPage() {
+	window.location.href = 'login.html';
 }
 
 getSongs();

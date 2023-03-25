@@ -33,6 +33,7 @@ function displaySongs() {
 
 		const spaceHolder = document.createElement('button');
 		spaceHolder.classList.add('space-holder');
+		spaceHolder.innerText = 'X';
 
 		savedItem.appendChild(savedSong);
 		savedItem.appendChild(deleteButton);
@@ -61,7 +62,7 @@ async function deleteSong(event) {
 		body: JSON.stringify(songs),
 	}).catch((err) => console.log(err));
 
-	// localStorage.setItem('songs', JSON.stringify(songs));
+	sessionStorage.setItem('songToDisplay', null);
 
 	itemEls[id].remove();
 }
@@ -109,6 +110,10 @@ function logoutUser() {
 	loginButton.innerText = 'Login';
 	loginButton.onclick = loginUser;
 	login.appendChild(loginButton);
+}
+
+function openSignInPage() {
+	window.location.href = 'login.html';
 }
 
 getSongs();

@@ -24,6 +24,23 @@ apiRouter.post('/putSongs', (req, res) => {
 	res.json(songs);
 });
 
+apiRouter.post('/auth/create', async (req, res) => {
+	if (await getUser(req.body.username)) {
+		res.status(409).send({ msg: 'Username already taken.' });
+	} else {
+		const pwdHash = await bcrypt.hash(req.body.password, 10);
+		const user = {
+			username: req.body.username,
+			password: pwdHash,
+			token: uuid.v4(),
+		};
+		collection.insertOne(user); // insert into mongodb
+
+		setAuthCookie(res, user.token);
+		res.send({ id: user._id });
+	}
+});
+
 apiRouter.get('/loadSongs', (_req, res) => {
 	res.json(songs);
 });

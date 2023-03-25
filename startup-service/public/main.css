@@ -1,3 +1,17 @@
+/* Colours */
+*:not(li, a) {
+	background-color: #20313c;
+}
+
+.btn-secondary {
+	background-color: #04d45d !important;
+	border: none;
+}
+
+.bg-secondary {
+	background-color: #001e2b !important;
+}
+
 body {
 	height: 100vh;
 	min-height: 20rem;
@@ -6,7 +20,6 @@ body {
 }
 
 header {
-	background: #323232;
 	flex: 0 2rem;
 	padding: 0.5rem;
 	color: white;
@@ -71,7 +84,6 @@ main {
 /* Song writer interface */
 
 .writer {
-	background: #323232;
 	height: 100%;
 	flex: 1;
 	display: grid;
@@ -83,7 +95,6 @@ main {
 }
 
 .song {
-	background-color: #3b3b3b;
 	grid-area: song;
 	border-radius: 0.5rem;
 	overflow: scroll;
@@ -93,7 +104,12 @@ div.line {
 	margin: 0.5rem 0.5rem 0 0.5rem;
 	border-radius: 0.2rem;
 	padding: 0.5rem;
-	background-color: #323232;
+	overflow: hidden;
+}
+
+div.line:hover {
+	cursor: pointer;
+	background-color: #d40404;
 }
 
 /* Line input */
@@ -103,13 +119,6 @@ div.line {
 	grid-area: input;
 	display: flex;
 	flex-direction: row;
-}
-
-#inputArea:focus {
-	border: 0.3rem solid #006d8d;
-	color: #fff;
-	margin: -0.25rem;
-	outline: none;
 }
 
 /* Sliding side menu */
@@ -124,15 +133,12 @@ div.line {
 	flex-direction: column;
 	width: 3rem;
 	height: 3rem;
-	/* background-color: white; */
-	/* border-radius: 50%; */
 	transition: transform 250ms ease;
 	cursor: pointer;
 	z-index: 200;
 }
 
 .menu span {
-	/* background-color: #444; */
 	background-color: white;
 	position: relative;
 	display: block;
@@ -204,11 +210,12 @@ div.line {
 
 .nav li {
 	width: 17.5rem;
-	padding: 1rem;
-	border-bottom: 0.5rem solid white;
+	/* padding: 1rem; */
+	border-bottom: 0.25rem solid white;
 }
 
 li a {
+	padding: 1rem;
 	display: block;
 	text-decoration: none;
 	color: white;
@@ -216,11 +223,11 @@ li a {
 }
 
 .nav li:nth-of-type(1) {
-	border-top: 0.5rem solid white;
+	border-top: 0.25rem solid white;
 }
 
 .nav li:hover {
-	background-color: white;
+	background-color: white !important;
 	transition: 0.2s ease;
 }
 
@@ -237,7 +244,8 @@ li a {
 
 /* Saved Songs */
 .songs,
-.users {
+.users,
+#loginForm {
 	flex: 1;
 	display: flex;
 	flex-direction: column;
@@ -245,14 +253,31 @@ li a {
 	justify-content: center;
 }
 
+#displayList {
+	background-color: #001e2b;
+	border-radius: 0.5rem;
+	width: 50vw;
+	height: 85vh;
+	margin-bottom: 0;
+	padding: 1rem 0 0 0 !important;
+	list-style: none;
+}
+
+.usersList {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
 .saved-song,
 .online-user {
-	background-color: #6c757d;
+	background-color: #20313c;
 	color: white;
 	padding: 1rem;
 	font-size: 1.2rem;
 	width: 15rem;
 	border-radius: 0.5rem;
+	text-align: center;
 }
 
 .saved-song:hover {
@@ -262,23 +287,16 @@ li a {
 	cursor: pointer;
 }
 
-#displayList {
-	padding: 1rem 0 0 0 !important;
-	list-style: none;
-}
-
-/* #displayList li:hover {
-	color: #444;
-	transition: 0.2s ease;
-	cursor: pointer;
-} */
-
-.saved-item,
-.online-user {
+.saved-item {
+	background-color: #001e2b;
 	margin-bottom: 1rem;
 	display: flex;
 	align-items: center;
 	justify-content: center;
+}
+
+.online-user {
+	margin-bottom: 1rem;
 }
 
 .saved-item {
@@ -287,11 +305,12 @@ li a {
 
 .space-holder {
 	display: inline !important;
-	background: #323232;
 }
 
 .delete,
 .space-holder {
+	background-color: transparent;
+	color: white;
 	border: none;
 	width: 3rem;
 	height: 3rem;
@@ -300,7 +319,6 @@ li a {
 }
 
 .delete {
-	background-color: #6c757d;
 	display: none !important;
 }
 
@@ -317,8 +335,21 @@ li a {
 	display: none !important;
 }
 
+/* Sign In Page */
+.signin-buttons {
+	margin-top: 1.5rem;
+}
+
+#createUserSubmit {
+	float: right !important;
+}
+
+/* Media Queries */
+
 @media (width < 40rem) {
 	#login {
 		display: none;
 	}
 }
+
+/* highlight color: #04d45d */

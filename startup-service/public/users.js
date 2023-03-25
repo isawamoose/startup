@@ -68,5 +68,9 @@ function logoutUser() {
 	login.appendChild(loginButton);
 }
 
+function openSignInPage() {
+	window.location.href = 'login.html';
+}
+
 displayUserAlreadyLoggedIn();
 getUsers();
