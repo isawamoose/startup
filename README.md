@@ -52,6 +52,17 @@ The code in play.js was more difficult to follow. Here I saw the use of classes 
 I appreciated how the game code tied objects to html elements, as in the case of the buttons. Each game button html had a js button object associated with it. 
 I also appreciated the use of Promises and await() so that the code would wait for the sound to finish playing before resuming. Nice touch.
 
+**Service**
+I appreciated how easy express makes creating a back end service. All http endpoints can be created by calling `app.<verb>` where the verb is the http action being performed e.g. get, post, put.
+Parsing json requests as objects in the service can be done using built-in middleware, by using the code `app.use(express.json());`
+The app's static files can be served using the code `app.use(express.static('public'));`
+I learned that when receiving a response from the service, I needed to not only `await` the response, but then `await` the `response.json()` before using the response.
+
+**DB**
+To properly store database credentials, put them in environment variables so they don't get checked into any repos.
+Databases have collections into which data can be inserted using `collection.insertOne(pieceOfData)`.
+Ideally, no front end code needs to be changed - the back end service handles all calls to the database and then returns data / messages to the front end as normal. So currently, my startup front end code calls the back end service to put and get songs. I can add db functionality to the back end service so that it inserts / looks up the data into / from the mongodb database.
+
 ## Startup
 
 **HTML and CSS**
