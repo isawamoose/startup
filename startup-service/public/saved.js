@@ -15,6 +15,14 @@ async function getSongs() {
 }
 
 function displaySongs() {
+	// if (!Object.values(songs).length) {
+	// 	const emptyMessage = document.createElement('h3');
+	// 	emptyMessage.classList.add('text-light');
+	// 	emptyMessage.innerText = 'No songs yet!';
+	// 	savedSongListEl.appendChild(emptyMessage);
+	// } else {
+	// 	console.log(songs);
+	// }
 	for (const song of Object.values(songs)) {
 		const savedItem = document.createElement('div');
 		savedItem.classList.add('saved-item');

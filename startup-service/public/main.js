@@ -29,7 +29,7 @@ function insertLineOfLyrics(text) {
 		const lyricsKeys = Object.keys(song.lyrics);
 		const id = lyricsKeys[lyricsKeys.length - 1]
 			? Number(lyricsKeys[lyricsKeys.length - 1]) + 1
-			: 0;
+			: 1;
 		song.lyrics[id] = text;
 
 		addLineToDOM(text, id);
@@ -44,7 +44,6 @@ function insertLineOfLyrics(text) {
 }
 
 function addLineToDOM(text, id) {
-	console.log('id: ', id);
 	const newLine = document.createElement('div');
 	newLine.textContent = text;
 	newLine.classList.add('line');
@@ -74,7 +73,7 @@ async function saveToStorage() {
 	const songKeys = Object.keys(songs);
 	song.id = songKeys[songKeys.length - 1]
 		? Number(songKeys[songKeys.length - 1]) + 1
-		: 0;
+		: 1;
 
 	for (const s of Object.values(songs)) {
 		if (s.title === song.title) {
@@ -122,6 +121,8 @@ function newSong() {
 			child.remove();
 		}
 	}
+
+	sessionStorage.setItem('songToDisplay', null);
 }
 
 function displaySong() {

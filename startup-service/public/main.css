@@ -269,14 +269,17 @@ li a {
 	align-items: center;
 }
 
+.saved-song {
+	background-color: #223c5b;
+	border-radius: 0.5rem;
+}
+
 .saved-song,
 .online-user {
-	background-color: #20313c;
 	color: white;
 	padding: 1rem;
 	font-size: 1.2rem;
 	width: 15rem;
-	border-radius: 0.5rem;
 	text-align: center;
 }
 

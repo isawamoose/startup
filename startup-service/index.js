@@ -1,6 +1,8 @@
 const express = require('express');
-
 const app = express();
+const DB = require('./database.js');
+
+const username = 'stephen';
 
 const port = process.argv.length > 2 ? process.argv[2] : 4000;
 
@@ -17,10 +19,11 @@ apiRouter.get('/loadUsers', (_req, res) => {
 	res.json(usersOnline);
 });
 
-apiRouter.post('/putSongs', (req, res) => {
+apiRouter.post('/putSongs', async (req, res) => {
 	const songs_ = req.body;
 	songs = songs_;
-	console.log(songs);
+
+	await DB.replaceSongs(songs, username);
 	res.json(songs);
 });
 
@@ -41,8 +44,11 @@ apiRouter.post('/auth/create', async (req, res) => {
 	}
 });
 
-apiRouter.get('/loadSongs', (_req, res) => {
-	res.json(songs);
+apiRouter.get('/loadSongs', async (_req, res) => {
+	data = await DB.getSongs(username);
+	console.log('data: ', data);
+	res.json(data);
+	// res.json(songs);
 });
 
 app.use((_req, res) => {
