@@ -70,7 +70,7 @@ The authtoken is a cookie, set in the response and retrieved from the request.
 
 **WebSockets**
 The websocket is set up in the front end code which handles sending and receiving of messages.
-The back end creates a Web Socket Server which handles the various connections.
+Set up a Web Socket Server (`const wss = new WebSocketServer({ noServer: true });`) in the back end which handles the various connections.
 Can use the `on('event')` method to handle connections, messages and closing of connections.
 Can use `setInterval()`, `ping()` and `pong()` to keep connections alive.
 
