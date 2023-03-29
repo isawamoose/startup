@@ -68,6 +68,12 @@ You can create a user with a username and password, using `bcrypt.hash()` to has
 It's useful to find users in the the database by email (I will use username in my app) and by auth token. The email method is used for login to retreve a user and then compare passwords. The authtoken method is used to secure endpoints with a piecce of middleware that attempts to find user by authtoken - if successful, they can access the secure endpoints. Else, they get an unauthorised message.
 The authtoken is a cookie, set in the response and retrieved from the request.
 
+**WebSockets**
+The websocket is set up in the front end code which handles sending and receiving of messages.
+The back end creates a Web Socket Server which handles the various connections.
+Can use the `on('event')` method to handle connections, messages and closing of connections.
+Can use `setInterval()`, `ping()` and `pong()` to keep connections alive.
+
 ## Startup
 
 **HTML and CSS**
