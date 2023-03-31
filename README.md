@@ -63,6 +63,17 @@ To properly store database credentials, put them in environment variables so the
 Databases have collections into which data can be inserted using `collection.insertOne(pieceOfData)`.
 Ideally, no front end code needs to be changed - the back end service handles all calls to the database and then returns data / messages to the front end as normal. So currently, my startup front end code calls the back end service to put and get songs. I can add db functionality to the back end service so that it inserts / looks up the data into / from the mongodb database.
 
+**Login**
+You can create a user with a username and password, using `bcrypt.hash()` to hash the password and store it in the database. Then, when trying to log in, the user's password can be compared with the hashed password using `bcrypt.compare()`. 
+It's useful to find users in the the database by email (I will use username in my app) and by auth token. The email method is used for login to retreve a user and then compare passwords. The authtoken method is used to secure endpoints with a piecce of middleware that attempts to find user by authtoken - if successful, they can access the secure endpoints. Else, they get an unauthorised message.
+The authtoken is a cookie, set in the response and retrieved from the request.
+
+**WebSockets**
+The websocket is set up in the front end code which handles sending and receiving of messages.
+Set up a Web Socket Server (`const wss = new WebSocketServer({ noServer: true });`) in the back end which handles the various connections.
+Can use the `on('event')` method to handle connections, messages and closing of connections.
+Can use `setInterval()`, `ping()` and `pong()` to keep connections alive.
+
 ## Startup
 
 **HTML and CSS**
