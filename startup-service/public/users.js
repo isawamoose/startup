@@ -1,17 +1,21 @@
-const usersListEl = document.querySelector('#displayList');
-const loginButton = document.querySelector('#loginBtn');
-const loginName = document.querySelector('#login-name');
-const login = document.querySelector('#login');
+const signInMessage = document.getElementById('signInMsg');
+const usersListEl = document.createElement('ul');
+usersListEl.id = 'displayList';
+usersListEl.classList.add('users-list');
+const usersEl = document.querySelector('div.users');
+const signInButtonEl = document.querySelector('#signInBtn');
 count = 0;
 
 let usersOnline = [];
 
 async function getUsers() {
-	console.log('Getting users');
+	usersEl.appendChild(usersListEl);
+
 	await fetch('/api/loadUsers')
 		.then((resp) => resp.json())
 		.then((data) => (usersOnline = data))
 		.catch((err) => console.log(err));
+
 	usersOnline.forEach((user) => {
 		const onlineUser = document.createElement('li');
 		onlineUser.classList.add('online-user');
@@ -23,54 +27,47 @@ async function getUsers() {
 	});
 }
 
-function loginUser(name) {
-	let username;
-
-	if (name) {
-		username = name;
-	} else if (loginName.value) {
-		username = loginName.value;
+async function signInOut() {
+	if (authenticated) {
+		//sign out
+		authenticated = false;
+		await fetch('/api/auth/logout', {
+			method: 'DELETE',
+		});
+		signInButtonEl.textContent = 'Sign In';
+		usersListEl.remove();
+		signInMessage.textContent = 'Sign in to view other online users';
+		usersEl.appendChild(signInMessage);
+	} else {
+		sessionStorage.setItem('prev-page', 'users.html');
+		window.location.href = 'login.html';
 	}
+}
+
+async function determineIfAuthenticated() {
+	const username = getUsername();
 	if (username) {
-		sessionStorage.setItem('username', username);
-		loginName.remove();
-		loginButton.remove();
-
-		const nameDisplay = document.createElement('div');
-		nameDisplay.innerText = username;
-		nameDisplay.classList.add('text-light');
-		nameDisplay.id = 'nameDisplay';
-		login.appendChild(nameDisplay);
-
-		loginButton.innerText = 'Logout';
-		loginButton.onclick = logoutUser;
-		login.appendChild(loginButton);
+		console.log(username);
+		const response = await fetch(`/api/user/${username}`);
+		if (response.status === 200) {
+			const body = await response.json();
+			if (body.authenticated) {
+				authenticated = true;
+				signInButtonEl.textContent = 'Sign Out';
+				signInMessage.remove();
+				getUsers();
+			} else {
+				signInMessage.textContent =
+					'Sign in to view other online users';
+			}
+		} else {
+			signInMessage.textContent = 'Sign in to view other online users';
+		}
 	}
 }
 
-function displayUserAlreadyLoggedIn() {
-	const username = sessionStorage.getItem('username');
-	if (username) {
-		loginUser(username);
-	}
+function getUsername() {
+	return localStorage.getItem('username');
 }
 
-function logoutUser() {
-	sessionStorage.removeItem('username');
-	const nameDisplay = document.querySelector('#nameDisplay');
-	nameDisplay.remove();
-	loginButton.remove();
-
-	loginName.value = '';
-	login.appendChild(loginName);
-	loginButton.innerText = 'Login';
-	loginButton.onclick = loginUser;
-	login.appendChild(loginButton);
-}
-
-function openSignInPage() {
-	window.location.href = 'login.html';
-}
-
-displayUserAlreadyLoggedIn();
-getUsers();
+determineIfAuthenticated();

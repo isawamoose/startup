@@ -1,28 +1,27 @@
 let songs = {};
 const itemEls = {};
-const savedSongListEl = document.querySelector('#displayList');
-const loginButton = document.querySelector('#loginBtn');
-const loginName = document.querySelector('#login-name');
-const login = document.querySelector('#login');
+const signInMessage = document.getElementById('signInMsg');
+const signInButtonEl = document.querySelector('#signInBtn');
+const savedSongListEl = document.createElement('ul');
+savedSongListEl.id = 'displayList';
+const songsEl = document.querySelector('div.songs');
+
+let authenticated = false;
 
 async function getSongs() {
-	console.log('Getting songs');
-	await fetch('/api/loadSongs')
-		.then((resp) => resp.json())
-		.then((data) => (songs = data))
-		.catch((err) => console.log(err));
+	try {
+		const resp = await fetch(`/api/loadSongs/${getUsername()}`);
+		const data = await resp.json();
+		songs = data;
+	} catch (err) {
+		console.log(err);
+	}
 	displaySongs();
 }
 
 function displaySongs() {
-	// if (!Object.values(songs).length) {
-	// 	const emptyMessage = document.createElement('h3');
-	// 	emptyMessage.classList.add('text-light');
-	// 	emptyMessage.innerText = 'No songs yet!';
-	// 	savedSongListEl.appendChild(emptyMessage);
-	// } else {
-	// 	console.log(songs);
-	// }
+	songsEl.appendChild(savedSongListEl);
+
 	for (const song of Object.values(songs)) {
 		const savedItem = document.createElement('div');
 		savedItem.classList.add('saved-item');
@@ -55,13 +54,20 @@ function displaySongs() {
 function openSong(event) {
 	const id = event.target.id.replace(/^\D+/g, '');
 	const songToSave = JSON.stringify(songs[id]);
-	sessionStorage.setItem('songToDisplay', songToSave);
+	localStorage.setItem('songToDisplay', songToSave);
 	window.location.href = 'index.html';
 }
 
 async function deleteSong(event) {
 	// Array indexing adjusts when you remove an element
 	const id = event.target.id.replace(/^\D+/g, '');
+
+	const songToDisplay = JSON.parse(localStorage.getItem('songToDisplay'));
+
+	if (songToDisplay && songToDisplay.title === songs[id].title) {
+		localStorage.setItem('songToDisplay', null);
+	}
+
 	delete songs[id];
 
 	await fetch('/api/putSongs', {
@@ -70,59 +76,49 @@ async function deleteSong(event) {
 		body: JSON.stringify(songs),
 	}).catch((err) => console.log(err));
 
-	sessionStorage.setItem('songToDisplay', null);
-
 	itemEls[id].remove();
 }
 
-function loginUser(name) {
-	let username;
-
-	if (name) {
-		username = name;
-	} else if (loginName.value) {
-		username = loginName.value;
+async function signInOut() {
+	if (authenticated) {
+		//sign out
+		authenticated = false;
+		await fetch('/api/auth/logout', {
+			method: 'DELETE',
+		});
+		signInButtonEl.textContent = 'Sign In';
+		savedSongListEl.remove();
+		signInMessage.textContent = 'Sign in to view saved songs';
+		songsEl.appendChild(signInMessage);
+	} else {
+		sessionStorage.setItem('prev-page', 'saved.html');
+		window.location.href = 'login.html';
 	}
+}
+
+async function determineIfAuthenticated() {
+	const username = getUsername();
 	if (username) {
-		sessionStorage.setItem('username', username);
-		loginName.remove();
-		loginButton.remove();
-
-		const nameDisplay = document.createElement('div');
-		nameDisplay.innerText = username;
-		nameDisplay.classList.add('text-light');
-		nameDisplay.id = 'nameDisplay';
-		login.appendChild(nameDisplay);
-
-		loginButton.innerText = 'Logout';
-		loginButton.onclick = logoutUser;
-		login.appendChild(loginButton);
+		console.log(username);
+		const response = await fetch(`/api/user/${username}`);
+		if (response.status === 200) {
+			const body = await response.json();
+			if (body.authenticated) {
+				authenticated = true;
+				signInButtonEl.textContent = 'Sign Out';
+				signInMessage.remove();
+				getSongs();
+			} else {
+				signInMessage.textContent = 'Sign in to view saved songs';
+			}
+		} else {
+			signInMessage.textContent = 'Sign in to view saved songs';
+		}
 	}
 }
 
-function displayUserAlreadyLoggedIn() {
-	const username = sessionStorage.getItem('username');
-	if (username) {
-		loginUser(username);
-	}
+function getUsername() {
+	return localStorage.getItem('username');
 }
 
-function logoutUser() {
-	sessionStorage.removeItem('username');
-	const nameDisplay = document.querySelector('#nameDisplay');
-	nameDisplay.remove();
-	loginButton.remove();
-
-	loginName.value = '';
-	login.appendChild(loginName);
-	loginButton.innerText = 'Login';
-	loginButton.onclick = loginUser;
-	login.appendChild(loginButton);
-}
-
-function openSignInPage() {
-	window.location.href = 'login.html';
-}
-
-getSongs();
-displayUserAlreadyLoggedIn();
+determineIfAuthenticated();

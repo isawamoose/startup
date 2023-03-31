@@ -16,15 +16,12 @@
 	</head>
 	<body>
 		<header class="text-muted">
-			<a
-				href="index.html"
-				style="left: 0.5rem; color: white; text-decoration: none"
-				>Home</a
-			>
-			<!-- back arrow icon -->
+			<a href="index.html" id="backArrow">←</a>
 		</header>
 		<main>
-			<div id="loginForm">
+			<div id="signInForm">
+				<div id="signInErrorMessage"></div>
+
 				<form>
 					<div class="form-group">
 						<input
@@ -45,14 +42,14 @@
 							id="loginSubmit"
 							type="submit"
 							class="btn btn-secondary"
-							onclick="loginUser()">
+							onclick="loginUser(); return false;">
 							Sign In
 						</button>
 						<button
 							id="createUserSubmit"
 							type="submit"
 							class="btn btn-secondary"
-							onclick="createUser()">
+							onclick="createUser(); return false;">
 							Create Account
 						</button>
 					</div>

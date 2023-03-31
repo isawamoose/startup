@@ -68,7 +68,7 @@ main {
 	margin-left: 0.5rem;
 }
 
-/* Login */
+/* Sign In */
 #login {
 	position: absolute;
 	right: 0;
@@ -88,20 +88,22 @@ main {
 /* Song writer interface */
 
 .writer {
-	height: 100%;
 	flex: 1;
-	display: grid;
-	grid-template-columns: 1fr 2fr 1fr;
-	grid-template-rows: 7fr 1fr;
-	grid-template-areas:
-		'. song .'
-		'. input .';
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
 }
 
 .song {
-	grid-area: song;
 	border-radius: 0.5rem;
-	overflow: scroll;
+	overflow: scroll !important;
+}
+
+.song {
+	border-radius: 0.5rem;
+	width: 50vw;
+	height: 80vh;
 }
 
 div.line {
@@ -116,13 +118,9 @@ div.line:hover {
 	background-color: #d40404;
 }
 
-/* Line input */
-
-#inputArea {
-	padding: 1rem 0 !important;
-	grid-area: input;
-	display: flex;
-	flex-direction: row;
+#lineInput {
+	margin-top: 0.5rem;
+	width: 50vw;
 }
 
 /* Sliding side menu */
@@ -249,7 +247,7 @@ li a {
 /* Saved Songs */
 .songs,
 .users,
-#loginForm {
+#signInForm {
 	flex: 1;
 	display: flex;
 	flex-direction: column;
@@ -265,16 +263,17 @@ li a {
 	margin-bottom: 0;
 	padding: 1rem 0 0 0 !important;
 	list-style: none;
+	overflow: scroll;
 }
 
-.usersList {
+.users-list {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
 }
 
 .saved-song {
-	background-color: #223c5b;
+	background-color: #20313c;
 	border-radius: 0.5rem;
 }
 
@@ -343,6 +342,14 @@ li a {
 }
 
 /* Sign In Page */
+#signInErrorMessage {
+	height: 3rem;
+	color: white;
+	padding: 0.5rem;
+	transition: all 0.2s ease-in;
+	text-align: center;
+}
+
 #passwordInput {
 	margin-top: 1rem;
 }
@@ -352,6 +359,18 @@ li a {
 
 #createUserSubmit {
 	float: right !important;
+}
+
+#backArrow {
+	left: 0.3rem;
+	top: -0.3rem;
+	color: white;
+	text-decoration: none;
+	font-size: 2rem;
+}
+
+#back-arrow:hover {
+	color: rgb(211, 211, 211);
 }
 
 /* Media Queries */

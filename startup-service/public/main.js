@@ -1,12 +1,11 @@
 const inputEl = document.querySelector('#lineInput');
 const titleEl = document.querySelector('#title');
-const saveButton = document.querySelector('#saveBtn');
-const songDisplay = document.getElementById('song');
-const loginButton = document.querySelector('#loginBtn');
-const loginName = document.querySelector('#login-name');
-const login = document.querySelector('#login');
+const saveButtonEl = document.querySelector('#saveBtn');
+const songDisplayEl = document.getElementById('song');
+const signInButtonEl = document.querySelector('#signInBtn');
+const lyricEls = {};
 
-inputEl.addEventListener('keydown', handleKeydown);
+let authenticated = false;
 
 class Song {
 	id;
@@ -17,6 +16,7 @@ class Song {
 let song = new Song();
 let songs = {};
 
+inputEl.addEventListener('keydown', handleKeydown);
 function handleKeydown(event) {
 	if (event.key == 'Enter') {
 		insertLineOfLyrics(inputEl.value);
@@ -34,12 +34,12 @@ function insertLineOfLyrics(text) {
 
 		addLineToDOM(text, id);
 
-		if (saveButton.innerText !== 'Save') {
-			saveButton.innerText = 'Save';
-			saveButton.classList.replace('btn-dark', 'btn-secondary');
+		if (saveButtonEl.innerText !== 'Save') {
+			saveButtonEl.innerText = 'Save';
+			saveButtonEl.classList.replace('btn-dark', 'btn-secondary');
 		}
 
-		sessionStorage.setItem('songToDisplay', song);
+		localStorage.setItem('songToDisplay', song);
 	}
 }
 
@@ -50,21 +50,28 @@ function addLineToDOM(text, id) {
 	newLine.id = id;
 	newLine.style.textAlign = 'center';
 	newLine.addEventListener('click', removeLyricLine);
+	// newLine.addEventListener('click', editLyricLine);
 
-	songDisplay.appendChild(newLine);
+	songDisplayEl.appendChild(newLine);
+	lyricEls[id] = newLine;
 	inputEl.value = '';
 }
 
 function removeLyricLine(event) {
 	const id = event.target.id;
 	delete song.lyrics[id];
-	event.target.remove();
+	lyricEls[id].remove();
 
-	if (saveButton.innerText !== 'Save') {
-		saveButton.innerText = 'Save';
-		saveButton.classList.replace('btn-dark', 'btn-secondary');
+	if (saveButtonEl.innerText !== 'Save') {
+		saveButtonEl.innerText = 'Save';
+		saveButtonEl.classList.replace('btn-dark', 'btn-secondary');
 	}
 }
+
+// function editLyricLine(event) {
+// 	const id = event.target.id;
+// 	inputEl.value = song.lyrics[id];
+// }
 
 async function saveToStorage() {
 	song.title = titleEl.value;
@@ -86,7 +93,7 @@ async function saveToStorage() {
 		const resp = await fetch('/api/putSongs', {
 			method: 'POST',
 			headers: { 'content-type': 'application/json' },
-			body: JSON.stringify(songs),
+			body: { username: getUsername(), songs: JSON.stringify(songs) },
 		});
 		const data = await resp.json();
 		songs = data;
@@ -94,40 +101,45 @@ async function saveToStorage() {
 		console.log(err);
 	}
 
-	sessionStorage.setItem('songToDisplay', song);
+	localStorage.setItem('songToDisplay', song);
 }
 
 function saveSong() {
-	setTimeout(() => {
-		saveToStorage();
-		saveButton.innerText = 'Saved';
-		saveButton.classList.replace('btn-secondary', 'btn-dark');
-	}, 500);
-	saveButton.innerText = 'Saving';
+	if (titleEl.value === '') {
+		titleEl.focus();
+	} else {
+		setTimeout(() => {
+			saveToStorage();
+			saveButtonEl.innerText = 'Saved';
+			saveButtonEl.classList.replace('btn-secondary', 'btn-dark');
+		}, 500);
+		saveButtonEl.innerText = 'Saving';
+	}
 }
 
 function newSong() {
-	if (song.lyrics.length) {
+	if (authenticated && song.lyrics.length) {
 		saveToStorage();
+		saveButtonEl.innerText = 'Save';
 	}
+
 	song = new Song();
-	titleEl.value = 'Untitled';
-	saveButton.innerText = 'Save';
-	saveButton.classList.replace('btn-dark', 'btn-secondary');
+	titleEl.value = '';
+	saveButtonEl.classList.replace('btn-dark', 'btn-secondary');
 
 	// reset
-	while (songDisplay.children.length) {
-		for (const child of songDisplay.children) {
+	while (songDisplayEl.children.length) {
+		for (const child of songDisplayEl.children) {
 			child.remove();
 		}
 	}
 
-	sessionStorage.setItem('songToDisplay', null);
+	localStorage.setItem('songToDisplay', null);
 }
 
 function displaySong() {
 	const songToDisplay =
-		JSON.parse(sessionStorage.getItem('songToDisplay')) ?? null;
+		JSON.parse(localStorage.getItem('songToDisplay')) ?? null;
 	if (songToDisplay) {
 		song = songToDisplay;
 		titleEl.value = song.title;
@@ -137,62 +149,52 @@ function displaySong() {
 	}
 }
 
-function loginUser(name) {
-	let username;
-
-	if (name) {
-		username = name;
-	} else if (loginName.value) {
-		username = loginName.value;
-	}
-	if (username) {
-		sessionStorage.setItem('username', username);
-		loginName.remove();
-		loginButton.remove();
-
-		const nameDisplay = document.createElement('div');
-		nameDisplay.innerText = username;
-		nameDisplay.classList.add('text-light');
-		nameDisplay.id = 'nameDisplay';
-		login.appendChild(nameDisplay);
-
-		loginButton.innerText = 'Logout';
-		loginButton.onclick = logoutUser;
-		login.appendChild(loginButton);
-	}
-}
-
-function displayUserAlreadyLoggedIn() {
-	const username = sessionStorage.getItem('username');
-	if (username) {
-		loginUser(username);
-	}
-}
-
-function logoutUser() {
-	sessionStorage.removeItem('username');
-	const nameDisplay = document.querySelector('#nameDisplay');
-	nameDisplay.remove();
-	loginButton.remove();
-
-	loginName.value = '';
-	login.appendChild(loginName);
-	loginButton.innerText = 'Login';
-	loginButton.onclick = loginUser;
-	login.appendChild(loginButton);
+function getUsername() {
+	return localStorage.getItem('username');
 }
 
 async function getSongs() {
-	await fetch('/api/loadSongs')
+	await fetch(`/api/loadSongs/${getUsername()}`)
 		.then((resp) => resp.json())
 		.then((data) => (songs = data))
 		.catch((err) => console.log(err));
 }
 
-function openSignInPage() {
-	window.location.href = 'login.html';
+async function signInOut() {
+	if (authenticated) {
+		//sign out
+		authenticated = false;
+		await fetch('/api/auth/logout', {
+			method: 'DELETE',
+		});
+
+		saveButtonEl.textContent = 'Sign in to save';
+		saveButtonEl.setAttribute('disabled', true);
+		signInButtonEl.textContent = 'Sign In';
+	} else {
+		sessionStorage.setItem('prev-page', 'index.html');
+		window.location.href = 'login.html';
+	}
 }
 
-getSongs();
+async function determineIfAuthenticated() {
+	const username = localStorage.getItem('username');
+	if (username) {
+		const response = await fetch(`/api/user/${username}`);
+		if (response.status === 200) {
+			const body = await response.json();
+			if (body.authenticated) {
+				authenticated = true;
+				console.log('authenticated: ', username);
+				saveButtonEl.textContent = 'Save';
+				saveButtonEl.removeAttribute('disabled');
+				signInButtonEl.textContent = 'Sign Out';
+				getSongs();
+			}
+		}
+	}
+}
+
+determineIfAuthenticated();
 displaySong();
-displayUserAlreadyLoggedIn();
+inputEl.focus();

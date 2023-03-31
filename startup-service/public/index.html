@@ -16,8 +16,12 @@
 	<body>
 		<header class="text-muted">
 			<input id="title" class="form-control" placeholder="Untitled" />
-			<button class="btn btn-secondary" id="saveBtn" onclick="saveSong()">
-				Save
+			<button
+				class="btn btn-secondary"
+				id="saveBtn"
+				onclick="saveSong()"
+				disabled>
+				Sign in to save
 			</button>
 			<button class="btn btn-secondary" id="newBtn" onclick="newSong()">
 				New
@@ -25,8 +29,8 @@
 			<div id="login">
 				<button
 					class="btn btn-secondary"
-					id="loginBtn"
-					onclick="openSignInPage()">
+					id="signInBtn"
+					onclick="signInOut()">
 					Sign In
 				</button>
 			</div>
@@ -51,13 +55,11 @@
 			</nav>
 			<div class="writer">
 				<div id="song" class="song text-light bg-secondary"></div>
-				<div id="inputArea">
-					<input
-						id="lineInput"
-						name="line"
-						class="form-control"
-						placeholder="Enter a line of lyrics..." />
-				</div>
+				<input
+					id="lineInput"
+					name="line"
+					class="form-control"
+					placeholder="Enter a line of lyrics..." />
 			</div>
 		</main>
 		<footer class="text-muted">
