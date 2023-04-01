@@ -13,15 +13,14 @@ async function getSongs() {
 		const resp = await fetch(`/api/loadSongs/${getUsername()}`);
 		const data = await resp.json();
 		songs = data;
+		displaySongs();
 	} catch (err) {
 		console.log(err);
 	}
-	displaySongs();
 }
 
 function displaySongs() {
 	songsEl.appendChild(savedSongListEl);
-
 	for (const song of Object.values(songs)) {
 		const savedItem = document.createElement('div');
 		savedItem.classList.add('saved-item');
@@ -73,7 +72,10 @@ async function deleteSong(event) {
 	await fetch('/api/putSongs', {
 		method: 'POST',
 		headers: { 'content-type': 'application/json' },
-		body: JSON.stringify(songs),
+		body: JSON.stringify({
+			username: getUsername(),
+			songs: JSON.stringify(songs),
+		}),
 	}).catch((err) => console.log(err));
 
 	itemEls[id].remove();
@@ -91,7 +93,7 @@ async function signInOut() {
 		signInMessage.textContent = 'Sign in to view saved songs';
 		songsEl.appendChild(signInMessage);
 	} else {
-		sessionStorage.setItem('prev-page', 'saved.html');
+		localStorage.setItem('songToDisplay', null);
 		window.location.href = 'login.html';
 	}
 }
@@ -109,7 +111,8 @@ async function determineIfAuthenticated() {
 				signInMessage.remove();
 				getSongs();
 			} else {
-				signInMessage.textContent = 'Sign in to view saved songs';
+				signInMessage.innerHTML =
+					'<a href="login.html" class="login-link">Sign in</a> to view saved songs';
 			}
 		} else {
 			signInMessage.textContent = 'Sign in to view saved songs';
@@ -121,4 +124,5 @@ function getUsername() {
 	return localStorage.getItem('username');
 }
 
+sessionStorage.setItem('prev-page', 'saved.html');
 determineIfAuthenticated();

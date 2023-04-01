@@ -7,6 +7,7 @@ const signInButtonEl = document.querySelector('#signInBtn');
 count = 0;
 
 let usersOnline = [];
+let authenticated = false;
 
 async function getUsers() {
 	usersEl.appendChild(usersListEl);
@@ -39,7 +40,7 @@ async function signInOut() {
 		signInMessage.textContent = 'Sign in to view other online users';
 		usersEl.appendChild(signInMessage);
 	} else {
-		sessionStorage.setItem('prev-page', 'users.html');
+		sessionStorage.setItem('songToDisplay', null);
 		window.location.href = 'login.html';
 	}
 }
@@ -57,8 +58,8 @@ async function determineIfAuthenticated() {
 				signInMessage.remove();
 				getUsers();
 			} else {
-				signInMessage.textContent =
-					'Sign in to view other online users';
+				signInMessage.innerHTML =
+					'<a href="login.html" class="login-link">Sign in</a> to view other online users';
 			}
 		} else {
 			signInMessage.textContent = 'Sign in to view other online users';
@@ -70,4 +71,5 @@ function getUsername() {
 	return localStorage.getItem('username');
 }
 
+sessionStorage.setItem('prev-page', 'users.html');
 determineIfAuthenticated();

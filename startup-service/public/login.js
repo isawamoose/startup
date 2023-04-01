@@ -1,4 +1,14 @@
 const backArrowEl = document.getElementById('backArrow');
+const quoteEl = document.getElementById('quote');
+
+async function getRandomQuote() {
+	await fetch('https://api.quotable.io/random?maxLength=50')
+		.then((resp) => resp.json())
+		.then((data) => {
+			quoteEl.textContent = data.content;
+		})
+		.catch(console.log('Failed to retrieve random quote'));
+}
 
 function loginUser() {
 	loginOrCreate('/api/auth/login');
@@ -57,3 +67,4 @@ function getPrevPage() {
 }
 
 backArrowEl.href = getPrevPage();
+getRandomQuote();

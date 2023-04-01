@@ -367,15 +367,34 @@ li a {
 	color: white;
 	text-decoration: none;
 	font-size: 2rem;
+	z-index: 10;
 }
 
 #back-arrow:hover {
 	color: rgb(211, 211, 211);
 }
 
+#quoteContainer {
+	margin-top: 1rem;
+	max-width: 70vw;
+}
+
+#quote {
+	color: white;
+}
+
+.login-link {
+	color: #04d45d;
+}
+
+.login-link:hover {
+	transition: 0.2s ease-in;
+	color: #04c256;
+}
+
 /* Media Queries */
 
-@media (width < 40rem) {
+@media (width < 34rem) {
 	#login {
 		display: none;
 	}

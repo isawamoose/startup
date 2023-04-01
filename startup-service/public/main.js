@@ -23,6 +23,13 @@ function handleKeydown(event) {
 	}
 }
 
+document.addEventListener('click', saveTitle);
+function saveTitle(event) {
+	if (event.target != titleEl) {
+		song.title = titleEl.value;
+	}
+}
+
 function insertLineOfLyrics(text) {
 	if (text) {
 		// Get next id
@@ -34,12 +41,12 @@ function insertLineOfLyrics(text) {
 
 		addLineToDOM(text, id);
 
-		if (saveButtonEl.innerText !== 'Save') {
+		if (saveButtonEl.innerText === 'Saved') {
 			saveButtonEl.innerText = 'Save';
 			saveButtonEl.classList.replace('btn-dark', 'btn-secondary');
 		}
-
-		localStorage.setItem('songToDisplay', song);
+		console.log(song);
+		localStorage.setItem('songToDisplay', JSON.stringify(song));
 	}
 }
 
@@ -93,7 +100,10 @@ async function saveToStorage() {
 		const resp = await fetch('/api/putSongs', {
 			method: 'POST',
 			headers: { 'content-type': 'application/json' },
-			body: { username: getUsername(), songs: JSON.stringify(songs) },
+			body: JSON.stringify({
+				username: getUsername(),
+				songs: songs,
+			}),
 		});
 		const data = await resp.json();
 		songs = data;
@@ -124,16 +134,18 @@ function newSong() {
 	}
 
 	song = new Song();
+
+	clearSongDisplay();
+}
+
+function clearSongDisplay() {
 	titleEl.value = '';
 	saveButtonEl.classList.replace('btn-dark', 'btn-secondary');
-
-	// reset
 	while (songDisplayEl.children.length) {
 		for (const child of songDisplayEl.children) {
 			child.remove();
 		}
 	}
-
 	localStorage.setItem('songToDisplay', null);
 }
 
@@ -170,6 +182,9 @@ async function signInOut() {
 
 		saveButtonEl.textContent = 'Sign in to save';
 		saveButtonEl.setAttribute('disabled', true);
+
+		clearSongDisplay();
+
 		signInButtonEl.textContent = 'Sign In';
 	} else {
 		sessionStorage.setItem('prev-page', 'index.html');
