@@ -32,6 +32,7 @@ function configureWebSocket() {
 	};
 	socket.onmessage = async (event) => {
 		const msg = JSON.parse(await event.data.text());
+		console.log('message: ', msg);
 		displayChatMessage(msg);
 	};
 	socket.onclose = () => {
@@ -48,7 +49,7 @@ function displayChatMessage(msg) {
 
 function sendChatMessage(message) {
 	displayChatMessage({ username: 'me', text: message });
-	socket.send({ username: getUsername(), text: message });
+	socket.send(JSON.stringify({ username: getUsername(), text: message }));
 	chatInputEl.value = '';
 }
 
