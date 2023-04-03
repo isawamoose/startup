@@ -3,6 +3,7 @@ const app = express();
 const DB = require('./database.js');
 const bcrypt = require('bcrypt');
 const cookies = require('cookie-parser');
+const { PeerProxy } = require('./peerProxy.js');
 
 const authCookieName = 'token';
 
@@ -14,8 +15,6 @@ app.use(cookies());
 
 const apiRouter = express.Router();
 app.use('/api', apiRouter);
-
-const usersOnline = ['Adam', 'John', 'Drew'];
 
 apiRouter.post('/auth/create', async (req, res) => {
 	if (await DB.getUser(req.body.username)) {
@@ -67,10 +66,6 @@ apiRouter.get('/loadSongs/:username', async (req, res) => {
 	res.json(data);
 });
 
-apiRouter.get('/loadUsers', (_req, res) => {
-	res.json(usersOnline);
-});
-
 apiRouter.post('/putSongs', async (req, res) => {
 	const songs = req.body.songs;
 	const username = req.body.username;
@@ -91,6 +86,8 @@ function setAuthCookie(res, authToken) {
 	});
 }
 
-app.listen(port, () => {
+const httpService = app.listen(port, () => {
 	console.log(`Listening on port ${port}`);
 });
+
+new PeerProxy(httpService);

@@ -55,9 +55,7 @@ function addLineToDOM(text, id) {
 	newLine.textContent = text;
 	newLine.classList.add('line');
 	newLine.id = id;
-	newLine.style.textAlign = 'center';
 	newLine.addEventListener('click', removeLyricLine);
-	// newLine.addEventListener('click', editLyricLine);
 
 	songDisplayEl.appendChild(newLine);
 	lyricEls[id] = newLine;
@@ -111,7 +109,7 @@ async function saveToStorage() {
 		console.log(err);
 	}
 
-	localStorage.setItem('songToDisplay', song);
+	localStorage.setItem('songToDisplay', JSON.stringify(song));
 }
 
 function saveSong() {

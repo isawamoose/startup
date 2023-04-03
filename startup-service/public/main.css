@@ -53,6 +53,19 @@ main {
 	background: #323232;
 }
 
+h2 {
+	color: white;
+}
+
+.green-link {
+	color: #04d45d;
+}
+
+.green-link:hover {
+	transition: 0.2s ease-in;
+	color: #04c256;
+}
+
 /* Song title / save button */
 
 #title {
@@ -87,7 +100,10 @@ main {
 
 /* Song writer interface */
 
-.writer {
+.writer,
+.songs,
+.chatContainer,
+#signInForm {
 	flex: 1;
 	display: flex;
 	flex-direction: column;
@@ -95,22 +111,23 @@ main {
 	align-items: center;
 }
 
-.song {
-	border-radius: 0.5rem;
-	overflow: scroll !important;
-}
-
-.song {
+.song,
+.chat {
+	background-color: #001e2b;
 	border-radius: 0.5rem;
 	width: 50vw;
 	height: 80vh;
+	overflow: scroll !important;
 }
 
-div.line {
+div.line,
+.message {
 	margin: 0.5rem 0.5rem 0 0.5rem;
 	border-radius: 0.2rem;
 	padding: 0.5rem;
 	overflow: hidden;
+	text-align: center;
+	color: white;
 }
 
 div.line:hover {
@@ -118,9 +135,94 @@ div.line:hover {
 	background-color: #d40404;
 }
 
-#lineInput {
+#lineInput,
+#chatInput {
 	margin-top: 0.5rem;
 	width: 50vw;
+}
+
+/* Saved Songs / Chat */
+
+#displayList {
+	background-color: #001e2b;
+	border-radius: 0.5rem;
+	width: 50vw;
+	height: 85vh;
+	margin-bottom: 0;
+	padding: 1rem 0 0 0 !important;
+	list-style: none;
+	overflow: scroll;
+}
+
+.item-list {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.saved-song {
+	background-color: #20313c;
+	border-radius: 0.5rem;
+}
+
+.saved-song,
+.online-user {
+	color: white;
+	padding: 1rem;
+	font-size: 1.2rem;
+	width: 15rem;
+	text-align: center;
+}
+
+.saved-song:hover {
+	background-color: white !important;
+	transition: 0.2s ease;
+	color: #444 !important;
+	cursor: pointer;
+}
+
+.saved-item {
+	background-color: #001e2b;
+	margin-bottom: 1rem;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.saved-item {
+	margin-left: 4rem;
+}
+
+.space-holder {
+	display: inline !important;
+}
+
+.delete,
+.space-holder {
+	background-color: transparent;
+	color: white;
+	border: none;
+	width: 3rem;
+	height: 3rem;
+	margin-left: 1rem;
+	border-radius: 100% !important;
+}
+
+.delete {
+	display: none !important;
+}
+
+.delete:hover {
+	background-color: #ff3636;
+	transition: 0.2s ease;
+}
+
+.saved-item:hover .delete {
+	display: inline !important;
+}
+
+.saved-item:hover .space-holder {
+	display: none !important;
 }
 
 /* Sliding side menu */
@@ -244,103 +346,6 @@ li a {
 	font-size: 1.2rem;
 }
 
-/* Saved Songs */
-.songs,
-.users,
-#signInForm {
-	flex: 1;
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	justify-content: center;
-}
-
-#displayList {
-	background-color: #001e2b;
-	border-radius: 0.5rem;
-	width: 50vw;
-	height: 85vh;
-	margin-bottom: 0;
-	padding: 1rem 0 0 0 !important;
-	list-style: none;
-	overflow: scroll;
-}
-
-.users-list {
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-}
-
-.saved-song {
-	background-color: #20313c;
-	border-radius: 0.5rem;
-}
-
-.saved-song,
-.online-user {
-	color: white;
-	padding: 1rem;
-	font-size: 1.2rem;
-	width: 15rem;
-	text-align: center;
-}
-
-.saved-song:hover {
-	background-color: white !important;
-	transition: 0.2s ease;
-	color: #444 !important;
-	cursor: pointer;
-}
-
-.saved-item {
-	background-color: #001e2b;
-	margin-bottom: 1rem;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-}
-
-.online-user {
-	margin-bottom: 1rem;
-}
-
-.saved-item {
-	margin-left: 4rem;
-}
-
-.space-holder {
-	display: inline !important;
-}
-
-.delete,
-.space-holder {
-	background-color: transparent;
-	color: white;
-	border: none;
-	width: 3rem;
-	height: 3rem;
-	margin-left: 1rem;
-	border-radius: 100% !important;
-}
-
-.delete {
-	display: none !important;
-}
-
-.delete:hover {
-	background-color: #ff3636;
-	transition: 0.2s ease;
-}
-
-.saved-item:hover .delete {
-	display: inline !important;
-}
-
-.saved-item:hover .space-holder {
-	display: none !important;
-}
-
 /* Sign In Page */
 #signInErrorMessage {
 	height: 3rem;
@@ -381,15 +386,6 @@ li a {
 
 #quote {
 	color: white;
-}
-
-.login-link {
-	color: #04d45d;
-}
-
-.login-link:hover {
-	transition: 0.2s ease-in;
-	color: #04c256;
 }
 
 /* Media Queries */

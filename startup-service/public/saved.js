@@ -1,6 +1,6 @@
 let songs = {};
 const itemEls = {};
-const signInMessage = document.getElementById('signInMsg');
+const messageEl = document.createElement('h2');
 const signInButtonEl = document.querySelector('#signInBtn');
 const savedSongListEl = document.createElement('ul');
 savedSongListEl.id = 'displayList';
@@ -20,40 +20,44 @@ async function getSongs() {
 }
 
 function displaySongs() {
-	songsEl.appendChild(savedSongListEl);
-	for (const song of Object.values(songs)) {
-		const savedItem = document.createElement('div');
-		savedItem.classList.add('saved-item');
+	if (!Object.values(songs).length) {
+		displayNoSongsMessage();
+	} else {
+		songsEl.appendChild(savedSongListEl);
+		for (const song of Object.values(songs)) {
+			const savedItem = document.createElement('div');
+			savedItem.classList.add('saved-item');
 
-		const savedSong = document.createElement('li');
-		savedSong.classList.add('saved-song');
-		savedSong.innerText = song.title;
-		savedSong.id = 'song-' + song.id;
-		savedSong.addEventListener('click', openSong);
+			const savedSong = document.createElement('li');
+			savedSong.classList.add('saved-song');
+			savedSong.innerText = song.title;
+			savedSong.id = 'song-' + song.id;
+			savedSong.addEventListener('click', openSong);
 
-		const deleteButton = document.createElement('button');
-		deleteButton.classList.add('delete', 'text-light');
-		deleteButton.innerText = 'X';
-		deleteButton.id = 'delete-' + song.id;
-		deleteButton.addEventListener('click', deleteSong);
+			const deleteButton = document.createElement('button');
+			deleteButton.classList.add('delete', 'text-light');
+			deleteButton.innerText = 'X';
+			deleteButton.id = 'delete-' + song.id;
+			deleteButton.addEventListener('click', deleteSong);
 
-		const spaceHolder = document.createElement('button');
-		spaceHolder.classList.add('space-holder');
-		spaceHolder.innerText = 'X';
+			const spaceHolder = document.createElement('button');
+			spaceHolder.classList.add('space-holder');
+			spaceHolder.innerText = 'X';
 
-		savedItem.appendChild(savedSong);
-		savedItem.appendChild(deleteButton);
-		savedItem.appendChild(spaceHolder);
+			savedItem.appendChild(savedSong);
+			savedItem.appendChild(deleteButton);
+			savedItem.appendChild(spaceHolder);
 
-		itemEls[song.id] = savedItem;
-		savedSongListEl.appendChild(savedItem);
+			itemEls[song.id] = savedItem;
+			savedSongListEl.appendChild(savedItem);
+		}
 	}
 }
 
 function openSong(event) {
 	const id = event.target.id.replace(/^\D+/g, '');
-	const songToSave = JSON.stringify(songs[id]);
-	localStorage.setItem('songToDisplay', songToSave);
+	const songToSave = songs[id];
+	localStorage.setItem('songToDisplay', JSON.stringify(songToSave));
 	window.location.href = 'index.html';
 }
 
@@ -74,11 +78,16 @@ async function deleteSong(event) {
 		headers: { 'content-type': 'application/json' },
 		body: JSON.stringify({
 			username: getUsername(),
-			songs: JSON.stringify(songs),
+			songs: songs,
 		}),
 	}).catch((err) => console.log(err));
 
 	itemEls[id].remove();
+
+	if (!Object.values(songs).length) {
+		savedSongListEl.remove();
+		displayNoSongsMessage();
+	}
 }
 
 async function signInOut() {
@@ -90,8 +99,7 @@ async function signInOut() {
 		});
 		signInButtonEl.textContent = 'Sign In';
 		savedSongListEl.remove();
-		signInMessage.textContent = 'Sign in to view saved songs';
-		songsEl.appendChild(signInMessage);
+		displaySignedOutMessage();
 	} else {
 		localStorage.setItem('songToDisplay', null);
 		window.location.href = 'login.html';
@@ -108,14 +116,13 @@ async function determineIfAuthenticated() {
 			if (body.authenticated) {
 				authenticated = true;
 				signInButtonEl.textContent = 'Sign Out';
-				signInMessage.remove();
+				messageEl.remove();
 				getSongs();
 			} else {
-				signInMessage.innerHTML =
-					'<a href="login.html" class="login-link">Sign in</a> to view saved songs';
+				displaySignedOutMessage();
 			}
 		} else {
-			signInMessage.textContent = 'Sign in to view saved songs';
+			displaySignedOutMessage();
 		}
 	}
 }
@@ -124,5 +131,16 @@ function getUsername() {
 	return localStorage.getItem('username');
 }
 
+function displaySignedOutMessage() {
+	messageEl.innerHTML =
+		'<a href="login.html" class="green-link">Sign in</a> to view saved songs';
+	songsEl.appendChild(messageEl);
+}
+
+function displayNoSongsMessage() {
+	messageEl.innerHTML =
+		'<a href="index.html" class="green-link">Write</a> your first song!';
+	songsEl.appendChild(messageEl);
+}
 sessionStorage.setItem('prev-page', 'saved.html');
 determineIfAuthenticated();
