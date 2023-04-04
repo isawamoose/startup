@@ -15,6 +15,7 @@ const url = `mongodb+srv://${userName}:${password}@${hostname}`;
 const client = new MongoClient(url);
 const songsCollection = client.db('songwriter').collection('songs');
 const usersCollection = client.db('songwriter').collection('users');
+const chatCollection = client.db('songwriter').collection('chat');
 
 function replaceSongs(_songs, _username) {
 	const data = { username: _username, songs: _songs };
@@ -48,6 +49,17 @@ async function createUser(username, password) {
 	return user;
 }
 
+async function insertChatMessage(message) {
+	await chatCollection.insertOne(message);
+	return message;
+}
+
+async function getChatMessages(number) {
+	const cursor = chatCollection.find();
+	const data = await cursor.toArray();
+	return data.length >= number ? data.slice(1).slice(-number) : data;
+}
+
 function getUserByToken(token) {
 	return userCollection.findOne({ token: token });
 }
@@ -58,4 +70,6 @@ module.exports = {
 	getUser,
 	createUser,
 	getUserByToken,
+	getChatMessages,
+	insertChatMessage,
 };

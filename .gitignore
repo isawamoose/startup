@@ -1,3 +1,6 @@
 production.pem
 node_modules
 mongocredentials.txt
+.vscode
+keys
+simon-websocket

@@ -45,7 +45,6 @@ function insertLineOfLyrics(text) {
 			saveButtonEl.innerText = 'Save';
 			saveButtonEl.classList.replace('btn-dark', 'btn-secondary');
 		}
-		console.log(song);
 		localStorage.setItem('songToDisplay', JSON.stringify(song));
 	}
 }
@@ -67,10 +66,12 @@ function removeLyricLine(event) {
 	delete song.lyrics[id];
 	lyricEls[id].remove();
 
-	if (saveButtonEl.innerText !== 'Save') {
+	if (saveButtonEl.innerText === 'Saved') {
 		saveButtonEl.innerText = 'Save';
 		saveButtonEl.classList.replace('btn-dark', 'btn-secondary');
 	}
+
+	localStorage.setItem('songToDisplay', JSON.stringify(song));
 }
 
 // function editLyricLine(event) {

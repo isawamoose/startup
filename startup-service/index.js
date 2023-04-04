@@ -74,6 +74,18 @@ apiRouter.post('/putSongs', async (req, res) => {
 	res.json(songs);
 });
 
+apiRouter.get('/chat/:number', async (req, res) => {
+	const numMessages = Number(req.params.number);
+	const messages = await DB.getChatMessages(numMessages);
+	res.json(messages);
+});
+
+apiRouter.post('/chat/message', async (req, res) => {
+	const message = req.body;
+	const msg = await DB.insertChatMessage(message);
+	res.json({ username: msg.username, text: msg.text });
+});
+
 app.use((_req, res) => {
 	res.sendFile('index.html', { root: 'public' });
 });

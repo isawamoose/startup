@@ -14,7 +14,7 @@ let socket;
 
 function displaySignedOutMessage() {
 	messageEl.innerHTML =
-		'<a href="login.html" class="green-link">Sign in</a> to chat';
+		'<a href="login.html" class="green-link">Sign in</a> to discuss song ideas';
 	chatContainerEl.appendChild(messageEl);
 }
 
@@ -35,22 +35,47 @@ function configureWebSocket() {
 		console.log('message: ', msg);
 		displayChatMessage(msg);
 	};
-	socket.onclose = () => {
-		//
-	};
 }
 
 function displayChatMessage(msg) {
 	const newLine = document.createElement('div');
 	newLine.textContent = `${msg.username}: ${msg.text}`;
 	newLine.classList.add('message');
-	chatMessageListEl.prepend(newLine);
+	chatMessageListEl.appendChild(newLine);
 }
 
-function sendChatMessage(message) {
-	displayChatMessage({ username: 'me', text: message });
-	socket.send(JSON.stringify({ username: getUsername(), text: message }));
+async function sendChatMessage(messageText) {
+	try {
+		const resp = await fetch('api/chat/message', {
+			method: 'POST',
+			headers: { 'content-type': 'application/json' },
+			body: JSON.stringify({
+				username: getUsername(),
+				text: messageText,
+			}),
+		});
+		const data = await resp.json();
+
+		socket.send(data);
+		displayChatMessage({ username: 'me', text: data.text });
+	} catch (err) {
+		console.log(err);
+	}
+
 	chatInputEl.value = '';
+}
+
+async function getLastMessages() {
+	let messages;
+	await fetch('api/chat/10')
+		.then((resp) => resp.json())
+		.then((data) => {
+			messages = data;
+		})
+		.catch(console.log('Failed to retrieve last 10 messages'));
+	for (const message of messages) {
+		displayChatMessage(message);
+	}
 }
 
 async function determineIfAuthenticated() {
@@ -64,6 +89,7 @@ async function determineIfAuthenticated() {
 				authenticated = true;
 				signInButtonEl.textContent = 'Sign Out';
 				messageEl.remove();
+				getLastMessages();
 				configureWebSocket();
 			} else {
 				displaySignedOutMessage();
