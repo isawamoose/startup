@@ -75,7 +75,7 @@ h2 {
 	width: 12rem;
 }
 
-#title ~ button {
+#title ~ button:not(#signInBtn) {
 	position: relative;
 	left: 3rem;
 	margin-left: 0.5rem;
@@ -85,6 +85,7 @@ h2 {
 #signInBtn {
 	position: absolute;
 	right: 0;
+	height: 38px;
 	margin-right: 0.5rem;
 }
 
@@ -126,8 +127,7 @@ div.line,
 	overflow: hidden;
 	text-align: center;
 	color: white;
-	/* animation: expand 0.3s;
-	 */
+	animation: expand 0.5s;
 	transition: 0.4s ease-in;
 }
 
@@ -379,27 +379,27 @@ li a {
 }
 
 /* Media Queries */
-@media (width < 54rem) {
+@media (width < 55rem) {
 	.song,
 	.chat,
 	#displayList,
 	#lineInput,
 	#chatInput {
-		width: 60vw;
+		width: 65vw;
 	}
 }
 
-@media (width < 44rem) {
+@media (width < 45rem) {
 	.song,
 	.chat,
 	#displayList,
 	#lineInput,
 	#chatInput {
-		width: 75vw;
+		width: 78vw;
 	}
 }
 
-@media (width < 34rem) {
+@media (width < 35rem) {
 	.song,
 	.chat,
 	#displayList,
@@ -420,7 +420,7 @@ li a {
 		margin: 0.5rem 0.5rem 0 0.5rem;
 	}
 	50% {
-		margin: 0.5rem 0 0 0;
+		margin: 0.5rem 0.2rem 0 0.2rem;
 	}
 	to {
 		margin: 0.5rem 0.5rem 0 0.5rem;

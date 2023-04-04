@@ -73,7 +73,10 @@ async function getLastMessages() {
 			messages = data;
 		})
 		.catch((err) => console.log('Failed to retrieve last 10 messages'));
-	for (const message of messages) {
+	for (let message of messages) {
+		if (message.username === getUsername()) {
+			message.username = 'me';
+		}
 		displayChatMessage(message);
 	}
 }
