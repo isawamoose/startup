@@ -354,6 +354,7 @@ li a {
 
 #createUserSubmit {
 	float: right !important;
+	margin-left: 0.5rem;
 }
 
 #backArrow {

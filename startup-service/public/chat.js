@@ -38,6 +38,9 @@ function configureWebSocket() {
 }
 
 function displayChatMessage(msg) {
+	if (msg.username === getUsername()) {
+		msg.username = 'me';
+	}
 	const newLine = document.createElement('div');
 	newLine.textContent = `${msg.username}: ${msg.text}`;
 	newLine.classList.add('message');
@@ -74,9 +77,6 @@ async function getLastMessages() {
 		})
 		.catch((err) => console.log('Failed to retrieve last 10 messages'));
 	for (let message of messages) {
-		if (message.username === getUsername()) {
-			message.username = 'me';
-		}
 		displayChatMessage(message);
 	}
 }
