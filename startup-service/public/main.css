@@ -82,20 +82,10 @@ h2 {
 }
 
 /* Sign In */
-#login {
+#signInBtn {
 	position: absolute;
 	right: 0;
-	display: flex;
-	align-items: center;
-	padding-right: 0.5rem;
-}
-
-#login button {
-	margin-left: 0.5rem;
-}
-
-#login-name {
-	width: 9.2rem;
+	margin-right: 0.5rem;
 }
 
 /* Song writer interface */
@@ -112,12 +102,20 @@ h2 {
 }
 
 .song,
-.chat {
+.chat,
+#displayList {
 	background-color: #001e2b;
 	border-radius: 0.5rem;
 	width: 50vw;
 	height: 80vh;
 	overflow: scroll !important;
+}
+
+#displayList {
+	height: 85vh;
+	margin-bottom: 0;
+	padding: 1rem 0 0 0 !important;
+	list-style: none;
 }
 
 div.line,
@@ -145,17 +143,6 @@ div.line:hover {
 }
 
 /* Saved Songs / Chat */
-
-#displayList {
-	background-color: #001e2b;
-	border-radius: 0.5rem;
-	width: 50vw;
-	height: 85vh;
-	margin-bottom: 0;
-	padding: 1rem 0 0 0 !important;
-	list-style: none;
-	overflow: scroll;
-}
 
 .item-list {
 	display: flex;
@@ -392,10 +379,37 @@ li a {
 }
 
 /* Media Queries */
+@media (width < 54rem) {
+	.song,
+	.chat,
+	#displayList,
+	#lineInput,
+	#chatInput {
+		width: 60vw;
+	}
+}
+
+@media (width < 44rem) {
+	.song,
+	.chat,
+	#displayList,
+	#lineInput,
+	#chatInput {
+		width: 75vw;
+	}
+}
 
 @media (width < 34rem) {
-	#login {
-		display: none;
+	.song,
+	.chat,
+	#displayList,
+	#lineInput,
+	#chatInput {
+		width: 90vw;
+	}
+
+	#title {
+		width: 9rem;
 	}
 }
 

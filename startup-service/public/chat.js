@@ -56,7 +56,7 @@ async function sendChatMessage(messageText) {
 		});
 		const data = await resp.json();
 
-		socket.send(data);
+		socket.send(JSON.stringify(data));
 		displayChatMessage({ username: 'me', text: data.text });
 	} catch (err) {
 		console.log(err);
@@ -72,7 +72,7 @@ async function getLastMessages() {
 		.then((data) => {
 			messages = data;
 		})
-		.catch(console.log('Failed to retrieve last 10 messages'));
+		.catch((err) => console.log('Failed to retrieve last 10 messages'));
 	for (const message of messages) {
 		displayChatMessage(message);
 	}

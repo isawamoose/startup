@@ -1,0 +1,1 @@
+./deployService.sh -k ../keys/production.pem -h stephenamos.click -s startup
