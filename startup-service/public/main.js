@@ -80,7 +80,7 @@ function removeLyricLine(event) {
 // }
 
 async function saveToStorage() {
-	song.title = titleEl.value;
+	song.title = titleEl.value ?? '';
 
 	// Get next id
 	const songKeys = Object.keys(songs);
