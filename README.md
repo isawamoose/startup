@@ -87,3 +87,12 @@ I learned that whatever you store in localStorage needs to be stringifiable - e.
 Local and session storage became my go to way of maintaining state across the application. Very useful.
 I found it helpful, when storing objects that were associated with DOM elements in another object, to give the DOM element an id that matched the key of the object being stored.
 Writing functions was necessary to have any kind of click functionality - I could set the onclick property of a DOM element to be a function.
+
+**Service**
+ 
+Fetch: Makes it possible to send http requests to API endpoints, sending and receiving data. Using fetch without specifying a method defaults to GET requests, but the user can specify a method, add headers and a body to create a custom http request.
+Express: Can be used to create a server with ease. Can serve static files, expose endpoints for http requests, call other functions, add middleware. 
+Database: Using Mongodb to store my data added an extra dimension of usefulness to my app - I could now store data so that it was available after the app was closed. For a songwriting app, this was necessary to be able to store song data persistently. It was also necessary to add user accounts and authentication.
+Authentication: It's cool that you don't actually store passwords on the database - you instead store a hashed (using bcrypt) version of the password. When the user attempts to log in, you compare the hash of the password they enter with the hashed password in the database to see if they match.
+WebSockets: Allows for instant-ish communication between computers, a way for them to send and receive messages in real time. Built on top of existing http functionality.
+  
