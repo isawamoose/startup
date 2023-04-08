@@ -74,6 +74,9 @@ Set up a Web Socket Server (`const wss = new WebSocketServer({ noServer: true })
 Can use the `on('event')` method to handle connections, messages and closing of connections.
 Can use `setInterval()`, `ping()` and `pong()` to keep connections alive.
 
+**React**
+JSX makes it possible to create reactive html components that hold changeable state. This state can be used to programmatically change the html, and means data can be passed to other components. With Simon, we converted each page of the application into a component, creating some child components as well where it made sense to do so. The back end service can remain the same while the front end is converted to react - components can still make fetch requests to call the endpoints.
+
 ## Startup
 
 **HTML and CSS**
